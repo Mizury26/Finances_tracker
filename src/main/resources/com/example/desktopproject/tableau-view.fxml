@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<VBox stylesheets="@../../../css/style.css" alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.desktopproject.controller.TableauController"
+      prefHeight="600.0" prefWidth="900.0">
+
+    <padding>
+        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
+    </padding>
+
+    <Label styleClass="title" text="Tableau récapitulatif des dépenses"/>
+
+    <TableView fx:id="tableView" VBox.vgrow="ALWAYS" styleClass="table-view">
+        <columns>
+            <TableColumn editable="false" text="Période" prefWidth="100" styleClass="table-column">
+                <cellValueFactory>
+                    <PropertyValueFactory property="date"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn editable="false" text="Total" prefWidth="80" styleClass="table-column">
+                <cellValueFactory>
+                    <PropertyValueFactory property="total"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn editable="false" text="Logement" prefWidth="80" styleClass="table-column">
+                <cellValueFactory>
+                    <PropertyValueFactory property="housing"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn editable="false" text="Nourriture" prefWidth="80" styleClass="table-column">
+                <cellValueFactory>
+                    <PropertyValueFactory property="food"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn editable="false" text="Sortie" prefWidth="80" styleClass="table-column">
+                <cellValueFactory>
+                    <PropertyValueFactory property="goingOut"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn editable="false" text="Voiture/Transport" prefWidth="120" styleClass="table-column">
+                <cellValueFactory>
+                    <PropertyValueFactory property="transportation"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn editable="false" text="Voyage" prefWidth="80" styleClass="table-column">
+                <cellValueFactory>
+                    <PropertyValueFactory property="travel"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn editable="false" text="Impôts" prefWidth="80" styleClass="table-column">
+                <cellValueFactory>
+                    <PropertyValueFactory property="tax"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn editable="false" text="Autres" prefWidth="80" styleClass="table-column">
+                <cellValueFactory>
+                    <PropertyValueFactory property="others"/>
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
+    <Button text="Ajouter" onAction="#addExpense" styleClass="button"/>
+</VBox>

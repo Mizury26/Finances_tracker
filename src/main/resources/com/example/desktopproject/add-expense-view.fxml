@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<DialogPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          stylesheets="@../../../css/style.css"
+          prefWidth="400">
+
+    <headerText>Ajouter une nouvelle dépense</headerText>
+    
+    <content>
+        <GridPane hgap="10" vgap="10" styleClass="expense-grid">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <!-- Période -->
+            <Label text="Période:" GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="label-field" />
+            <DatePicker fx:id="periodeField" GridPane.columnIndex="1" GridPane.rowIndex="0" styleClass="date-field" />
+
+            <!-- Logement -->
+            <Label text="Logement:" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="label-field" />
+            <TextField fx:id="logementField" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="money-field" />
+
+            <!-- Nourriture -->
+            <Label text="Nourriture:" GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="label-field" />
+            <TextField fx:id="nourritureField" GridPane.columnIndex="1" GridPane.rowIndex="2" styleClass="money-field" />
+
+            <!-- Sortie -->
+            <Label text="Sortie:" GridPane.columnIndex="0" GridPane.rowIndex="3" styleClass="label-field" />
+            <TextField fx:id="sortieField" GridPane.columnIndex="1" GridPane.rowIndex="3" styleClass="money-field" />
+
+            <!-- Transport -->
+            <Label text="Voiture/Transport:" GridPane.columnIndex="0" GridPane.rowIndex="4" styleClass="label-field" />
+            <TextField fx:id="transportField" GridPane.columnIndex="1" GridPane.rowIndex="4" styleClass="money-field" />
+
+            <!-- Voyage -->
+            <Label text="Voyage:" GridPane.columnIndex="0" GridPane.rowIndex="5" styleClass="label-field" />
+            <TextField fx:id="voyageField" GridPane.columnIndex="1" GridPane.rowIndex="5" styleClass="money-field" />
+
+            <!-- Impôt -->
+            <Label text="Impôts:" GridPane.columnIndex="0" GridPane.rowIndex="6" styleClass="label-field" />
+            <TextField fx:id="impotField" GridPane.columnIndex="1" GridPane.rowIndex="6" styleClass="money-field" />
+
+            <!-- Autres -->
+            <Label text="Autres:" GridPane.columnIndex="0" GridPane.rowIndex="7" styleClass="label-field" />
+            <TextField fx:id="autresField" GridPane.columnIndex="1" GridPane.rowIndex="7" styleClass="money-field" />
+
+            <!-- Total -->
+            <Label text="Total:" GridPane.columnIndex="0" GridPane.rowIndex="8" styleClass="total-label" />
+            <Label fx:id="totalLabel" text="0.00 €" GridPane.columnIndex="1" GridPane.rowIndex="8" styleClass="total-amount" />
+        </GridPane>
+    </content>
+
+    <buttonTypes>
+        <ButtonType buttonData="OK_DONE" text="Valider"/>
+        <ButtonType buttonData="CANCEL_CLOSE" text="Annuler"/>
+    </buttonTypes>
+</DialogPane>

@@ -11,14 +11,10 @@ public class LogConfig {
 
     private static final String LOG_FILENAME = "application.log";
 
-    /**
-     * Configure le chemin du fichier de log selon l'OS et le définit
-     * comme propriété système pour que log4j puisse l'utiliser
-     */
+
     public static void configureLogDirectory() {
         String logDirPath = getLogDirectoryPath();
 
-        // Crée le répertoire de logs s'il n'existe pas
         File logDir = new File(logDirPath);
         if (!logDir.exists()) {
             boolean created = logDir.mkdirs();
@@ -29,7 +25,6 @@ public class LogConfig {
             }
         }
 
-        // Vérifie si le fichier de log peut être créé
         File logFile = new File(logDirPath, LOG_FILENAME);
         if (!logFile.exists()) {
             try {
@@ -45,14 +40,11 @@ public class LogConfig {
             }
         }
 
-        // S'assurer que le fichier est accessible en écriture
         if (!logFile.canWrite()) {
             System.err.println("ATTENTION: Le fichier de log existe mais n'est pas accessible en écriture: "
                     + logFile.getAbsolutePath());
         }
 
-        // Définit la propriété système pour que log4j puisse l'utiliser
-        // On utilise le chemin absolu pour éviter tout problème de résolution
         System.setProperty("finance.log.dir", logDir.getAbsolutePath());
         System.out.println("Chemin de log configuré: " + logDir.getAbsolutePath());
     }

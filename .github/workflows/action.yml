@@ -24,7 +24,7 @@ jobs:
           ./gradlew jpackage
 
       - name: Upload Linux artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: linux-package
           path: build/jpackage/*
@@ -47,7 +47,7 @@ jobs:
           ./gradlew jpackage
 
       - name: Upload Windows artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: windows-package
           path: build/jpackage/*
@@ -70,7 +70,7 @@ jobs:
           ./gradlew jpackage
 
       - name: Upload macOS artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: macos-package
           path: build/jpackage/*

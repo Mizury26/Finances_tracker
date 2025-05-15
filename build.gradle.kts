@@ -90,9 +90,8 @@ jlink {
             )
             installerOptions = listOf(
                 "--linux-shortcut",
-                "--linux-menu-group",
+                "--linux-menu-group", "Finance Tracker",
                 "--linux-rpm",
-                "--linux-deb"
             )
         }
     }

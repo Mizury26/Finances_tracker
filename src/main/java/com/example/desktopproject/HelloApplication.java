@@ -54,14 +54,15 @@ public class HelloApplication extends Application {
         getLogger().debug("Connexion à la base de données réussie");
 
         try {
-            getLogger().debug("Chargement du fichier FXML: tableau-view.fxml");
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("tableau-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
+            getLogger().debug("Chargement du fichier FXML: main-layout.fxml");
+            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("main-layout.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            // Stocker une référence au contrôleur principal dans la scène
+            scene.setUserData(loader.getController());
+
             stage.setTitle("Finance Tracker");
-
-            getLogger().debug("Chargement de l'icône de l'application");
             stage.getIcons().add(new Image(HelloApplication.class.getResourceAsStream("/images/logoDesktop.png")));
-
             stage.setScene(scene);
             stage.show();
             getLogger().info("Application démarrée avec succès");

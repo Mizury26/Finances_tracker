@@ -26,11 +26,17 @@ jobs:
           ./gradlew clean
           ./gradlew jpackage
 
-      - name: Upload Linux artifact
+      - name: Upload Linux artifact rpm
         uses: actions/upload-artifact@v4
         with:
-          name: linux-package
-          path: build/jpackage/*
+          name: linux-package-rpm
+          path: build/jpackage/*.rpm
+
+      - name: Upload Linux artifact deb
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-package-deb
+          path: build/jpackage/*.deb
 
   windows-build:
     runs-on: windows-latest
@@ -49,11 +55,17 @@ jobs:
           ./gradlew clean
           ./gradlew jpackage
 
-      - name: Upload Windows artifact
+      - name: Upload Windows artifact exe
         uses: actions/upload-artifact@v4
         with:
-          name: windows-package
-          path: build/jpackage/*
+          name: windows-package-exe
+          path: build/jpackage/*.exe
+
+      - name: Upload Windows artifact msi
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-package-msi
+          path: build/jpackage/*.msi
 
   macos-build:
     runs-on: macos-latest
@@ -75,8 +87,14 @@ jobs:
           ./gradlew clean
           ./gradlew jpackage
 
-      - name: Upload macOS artifact
+      - name: Upload macOS artifact dmg
         uses: actions/upload-artifact@v4
         with:
-          name: macos-package
-          path: build/jpackage/*
+          name: macos-package-dmg
+          path: build/jpackage/*.dmg
+
+      - name: Upload macOS artifact pkg
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-package-pkg
+          path: build/jpackage/*.pkg

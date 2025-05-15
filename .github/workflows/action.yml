@@ -6,28 +6,31 @@ on:
       - main
 
 jobs:
-#  linux-build:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout code
-#        uses: actions/checkout@v3
-#
-#      - name: Set up JDK
-#        uses: actions/setup-java@v3
-#        with:
-#          distribution: 'adopt'
-#          java-version: '17'
-#
-#      - name: Build linux package
-#        run: |
-#          ./gradlew clean
-#          ./gradlew jpackage
-#
-#      - name: Upload Linux artifact
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: linux-package
-#          path: build/jpackage/*
+  linux-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: '21'
+
+      - name: Setup Permissions
+        run : chmod +x gradlew
+
+      - name: Build linux package
+        run: |
+          ./gradlew clean
+          ./gradlew jpackage
+
+      - name: Upload Linux artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-package
+          path: build/jpackage/*
 
   windows-build:
     runs-on: windows-latest
@@ -62,7 +65,7 @@ jobs:
 #        uses: actions/setup-java@v3
 #        with:
 #          distribution: 'adopt'
-#          java-version: '17'
+#          java-version: '21'
 #
 #      - name: Build macos package
 #        run: |

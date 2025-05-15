@@ -73,14 +73,15 @@ jlink {
             imageOptions = listOf(
                 "--icon",
                 "src/main/resources/images/logoDesktop.icns",
+                "--mac-package-name", "finance-tracker",
             )
             installerOptions = listOf(
                 "--mac-package-name",
-                "Finance Tracker",
-                "--mac-sign",
-                "--mac-app-store",
-                "--mac-app-store-provider",
-                "YourProviderName"
+                "finance-tracker",
+                "--mac-package-identifier",
+                "com.example.desktopproject",
+                "--mac-package-signing-prefix",
+                "com.example"
             )
         }
         if (org.gradle.internal.os.OperatingSystem.current().isLinux) {
@@ -91,7 +92,7 @@ jlink {
             installerOptions = listOf(
                 "--linux-shortcut",
                 "--linux-menu-group", "Finance Tracker",
-                "--linux-package-name", "Finance Tracker",
+                "--linux-package-name", "finance-tracker",
             )
         }
     }

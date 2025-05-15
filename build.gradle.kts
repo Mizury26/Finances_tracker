@@ -90,7 +90,7 @@ jlink {
             )
             installerOptions = listOf(
                 "--linux-shortcut",
-                "--linux-menu",
+                "--linux-menu-group",
                 "--linux-rpm",
                 "--linux-deb"
             )

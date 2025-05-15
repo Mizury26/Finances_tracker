@@ -68,5 +68,32 @@ jlink {
                 "--win-per-user-install"
             )
         }
+
+        if (org.gradle.internal.os.OperatingSystem.current().isMacOsX) {
+            imageOptions = listOf(
+                "--icon",
+                "src/main/resources/images/logoDesktop.icns",
+            )
+            installerOptions = listOf(
+                "--mac-package-name",
+                "Finance Tracker",
+                "--mac-sign",
+                "--mac-app-store",
+                "--mac-app-store-provider",
+                "YourProviderName"
+            )
+        }
+        if (org.gradle.internal.os.OperatingSystem.current().isLinux) {
+            imageOptions = listOf(
+                "--icon",
+                "src/main/resources/images/logoDesktop.png",
+            )
+            installerOptions = listOf(
+                "--linux-shortcut",
+                "--linux-menu",
+                "--linux-rpm",
+                "--linux-deb"
+            )
+        }
     }
 }

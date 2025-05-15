@@ -15,7 +15,8 @@ public class Database {
     /**
      * Location of database
      */
-    private static final String location = "database.db";
+    private static final String location = DataBasePath.getDatabasePath();
+
 
     /**
      * Currently only table needed
@@ -77,10 +78,11 @@ public class Database {
     }
 
     protected static Connection connect() {
-        String dbPrefix = "jdbc:sqlite:";
+        DataBasePath.ensureDatabaseDirectoryExists();
+        String jdbcUrl = "jdbc:sqlite:" + location;
         Connection connection;
         try {
-            connection = DriverManager.getConnection(dbPrefix + location);
+            connection = DriverManager.getConnection(jdbcUrl);
         } catch (SQLException exception) {
             Logger.getAnonymousLogger().log(Level.SEVERE,
                     LocalDateTime.now() + ": Could not connect to SQLite DB at " +
@@ -89,5 +91,4 @@ public class Database {
         }
         return connection;
     }
-
 }

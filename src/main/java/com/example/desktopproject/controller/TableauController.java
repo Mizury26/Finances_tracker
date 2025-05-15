@@ -22,6 +22,7 @@ public class TableauController {
         // Exemple de données
         List<Expense> dbExpenses = ExpenseDAO.fetchAllDataFromDB();
         expenses.addAll(dbExpenses);
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableView.setItems(expenses);
     }
 

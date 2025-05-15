@@ -3,6 +3,7 @@ module com.example.desktopproject {
     requires javafx.fxml;
     requires java.sql;
     requires org.xerial.sqlitejdbc;
+    requires log4j;
 
 
     opens com.example.desktopproject to javafx.fxml;

@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DialogController extends Dialog<Expense> {
+    private static final Logger logger = Logger.getLogger(DialogController.class);
+
     @FXML
     private DatePicker periodeField;
     @FXML
@@ -47,15 +50,19 @@ public class DialogController extends Dialog<Expense> {
             Stage stage = (Stage) dialogPane.getScene().getWindow();
             stage.getIcons().add(new Image(HelloApplication.class.getResourceAsStream("/images/logoDesktop.png")));
 
+            logger.debug("DialogController initialisé avec succès");
+
             setResultConverter(buttonType -> {
                 if (buttonType.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+                    logger.info("Création d'une nouvelle dépense");
                     return createExpense();
                 }
+                logger.debug("Annulation de la création de dépense");
                 return null; // Retourne null si Annuler est cliqué
             });
 
-
         } catch (IOException e) {
+            logger.error("Erreur lors de l'ouverture du dialogue", e);
             e.printStackTrace();
             // Afficher un message d'erreur à l'utilisateur
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -64,6 +71,7 @@ public class DialogController extends Dialog<Expense> {
             alert.showAndWait();
         }
     }
+
     @FXML
     public void initialize() {
         // Initialiser la liste des champs monétaires
@@ -149,6 +157,7 @@ public class DialogController extends Dialog<Expense> {
 
     public Expense createExpense() {
         if (!isInputValid()) {
+            logger.warn("Tentative de création d'une dépense avec des données invalides");
             return null;
         }
 
@@ -162,6 +171,8 @@ public class DialogController extends Dialog<Expense> {
         float autres = parseFloatSafe(autresField.getText());
 
         float total = logement + nourriture + sortie + transport + voyage + impot + autres;
+
+        logger.info("Nouvelle dépense créée pour la date: " + date + " avec un total de: " + total);
 
         return new Expense(date, total, logement, nourriture, sortie,
                 transport, voyage, impot, autres);

@@ -17,7 +17,6 @@ public class MainLayoutController {
     private StackPane contentArea;
 
     public void initialize() {
-        // Charger la vue par défaut (tableau)
         loadView("dashboard-view.fxml");
     }
 

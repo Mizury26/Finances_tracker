@@ -12,4 +12,6 @@ module com.example.desktopproject {
     opens com.example.desktopproject.controller to javafx.fxml;
     exports com.example.desktopproject.model;
     opens com.example.desktopproject.model to javafx.fxml;
+    exports com.example.desktopproject.charts;
+    opens com.example.desktopproject.charts to javafx.fxml;
 }

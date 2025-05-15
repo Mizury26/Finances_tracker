@@ -56,7 +56,7 @@ public class HelloApplication extends Application {
         try {
             getLogger().debug("Chargement du fichier FXML: main-layout.fxml");
             FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("main-layout.fxml"));
-            Scene scene = new Scene(loader.load());
+            Scene scene = new Scene(loader.load(), 1000, 600);
 
             // Stocker une référence au contrôleur principal dans la scène
             scene.setUserData(loader.getController());

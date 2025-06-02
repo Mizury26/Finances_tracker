@@ -1,15 +1,18 @@
 package com.example.desktopproject.controller;
 
+import com.example.desktopproject.charts.LineChart;
 import com.example.desktopproject.charts.PieChart;
 import com.example.desktopproject.db.ExpenseDAO;
 import com.example.desktopproject.model.Expense;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.StackPane;
+import javafx.util.StringConverter;
 import org.apache.log4j.Logger;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.YearMonth;
 import java.time.format.TextStyle;
 import java.util.List;
 import java.util.Locale;
@@ -22,10 +25,14 @@ public class DashboardController {
     private StackPane pieChartContainer;
 
     @FXML
-    private ComboBox<String> monthSelector;
+    private StackPane lineChartContainer;
+
+    @FXML
+    private ComboBox<Month> monthSelector;
 
     private List<Expense> allExpenses;
     private PieChart pieChart;
+    private LineChart lineChart;
 
     @FXML
     public void initialize() {
@@ -33,6 +40,7 @@ public class DashboardController {
 
         // Initialisation du graphique en camembert
         pieChart = new PieChart("Répartition des dépenses");
+        lineChart = new LineChart("Évolution des dépenses");
 
         // Chargement des données
         loadAllExpenses();
@@ -40,11 +48,12 @@ public class DashboardController {
         // Configuration du sélecteur de mois
         setupMonthSelector();
 
-        // Affichage du graphique
-        updatePieChartForSelectedMonth();
-
         // Ajout du graphique au conteneur
         pieChartContainer.getChildren().add(pieChart.getChartNode());
+        lineChartContainer.getChildren().add(lineChart.getChartNode());
+
+        // Affichage du graphique
+        updateChartsForSelectedMonth();
 
         logger.debug("Dashboard initialisé avec succès");
     }
@@ -56,48 +65,57 @@ public class DashboardController {
 
     private void setupMonthSelector() {
         if (monthSelector != null) {
-            // Remplir le sélecteur avec les mois disponibles dans les données
-            Locale locale = Locale.FRANCE;
+            // Configurer le convertisseur pour afficher les noms de mois en français
+            monthSelector.setConverter(new StringConverter<Month>() {
+                @Override
+                public String toString(Month month) {
+                    return month.getDisplayName(TextStyle.FULL, Locale.FRANCE);
+                }
 
-            // Version simple: tous les mois de l'année
-            for (Month month : Month.values()) {
-                String monthName = month.getDisplayName(TextStyle.FULL, locale);
-                monthSelector.getItems().add(monthName);
-            }
+                @Override
+                public Month fromString(String string) {
+                    for (Month month : Month.values()) {
+                        if (month.getDisplayName(TextStyle.FULL, Locale.FRANCE).equals(string)) {
+                            return month;
+                        }
+                    }
+                    return null;
+                }
+            });
+
+            // Ajouter tous les mois
+            monthSelector.getItems().addAll(Month.values());
 
             // Sélectionner le mois courant
-            String currentMonth = LocalDate.now().getMonth()
-                    .getDisplayName(TextStyle.FULL, locale);
-            monthSelector.setValue(currentMonth);
+            monthSelector.setValue(LocalDate.now().getMonth());
 
             // Action lors du changement de mois
-            monthSelector.setOnAction(event -> updatePieChartForSelectedMonth());
+            monthSelector.setOnAction(event -> updateChartsForSelectedMonth());
         }
     }
 
-    private void updatePieChartForSelectedMonth() {
+    private void updateChartsForSelectedMonth() {
         if (monthSelector != null && monthSelector.getValue() != null) {
-            String selectedMonth = monthSelector.getValue();
+            Month selectedMonth = monthSelector.getValue();
+            int year = LocalDate.now().getYear();
+            YearMonth yearMonth = YearMonth.of(year, selectedMonth);
 
             // Filtrer les dépenses pour le mois sélectionné
             List<Expense> monthlyExpenses = filterExpensesByMonth(selectedMonth);
 
-            // Mettre à jour le titre
-            pieChart.setTitle("Répartition des dépenses - " + selectedMonth);
+            // Mettre à jour le titre avec le nom en français
+            String monthName = selectedMonth.getDisplayName(TextStyle.FULL, Locale.FRANCE);
+            pieChart.setTitle("Répartition des dépenses - " + monthName);
 
-            // Charger les données et créer le graphique
-            pieChart.loadData(monthlyExpenses);
-            pieChart.createChart();
+            // Charger les données et créer les graphiques
+            pieChart.createChart(monthlyExpenses);
+            lineChart.createChart(monthlyExpenses, yearMonth);
         }
     }
 
-    private List<Expense> filterExpensesByMonth(String monthName) {
+    private List<Expense> filterExpensesByMonth(Month month) {
         return allExpenses.stream()
-                .filter(expense -> {
-                    String expenseMonth = expense.getDate().getMonth()
-                            .getDisplayName(TextStyle.FULL, Locale.FRANCE);
-                    return expenseMonth.equalsIgnoreCase(monthName);
-                })
+                .filter(expense -> expense.getDate().getMonth() == month)
                 .collect(Collectors.toList());
     }
 }

@@ -14,24 +14,33 @@ public class PieChart {
 
     private javafx.scene.chart.PieChart pieChart;
     private List<Expense> expenses;
-    private String title;
+
+    public ObservableList<javafx.scene.chart.PieChart.Data> pieChartData = FXCollections.observableArrayList();
 
     public PieChart(String title) {
-        this.title = title;
         this.pieChart = new javafx.scene.chart.PieChart();
         this.pieChart.setTitle(title);
     }
 
-    public void loadData(Object data) {
+//    public void loadData(Object data) {
+//        if (data instanceof List) {
+//            this.expenses = (List<Expense>) data;
+//            logger.debug("Données chargées pour le graphique en camembert: " + expenses.size() + " dépenses");
+//        } else {
+//            logger.error("Type de données incorrect pour le graphique en camembert");
+//        }
+//    }
+
+    public void createChart(Object data) {
+        pieChartData.clear(); // Réinitialiser les données du graphique
+
         if (data instanceof List) {
             this.expenses = (List<Expense>) data;
             logger.debug("Données chargées pour le graphique en camembert: " + expenses.size() + " dépenses");
         } else {
             logger.error("Type de données incorrect pour le graphique en camembert");
         }
-    }
 
-    public void createChart() {
         if (expenses == null || expenses.isEmpty()) {
             logger.warn("Aucune donnée disponible pour créer le graphique en camembert");
             return;
@@ -53,8 +62,6 @@ public class PieChart {
             grandTotal += expense.getTotal();
         }
 
-        // Création des données du graphique
-        ObservableList<javafx.scene.chart.PieChart.Data> pieChartData = FXCollections.observableArrayList();
 
         // N'ajouter que les catégories avec des dépenses > 0
         if (totalLogement > 0) pieChartData.add(new javafx.scene.chart.PieChart.Data("Logement", totalLogement));
@@ -70,11 +77,11 @@ public class PieChart {
 
         // Ajouter des tooltips
         final float finalGrandTotal = grandTotal;
-        pieChart.getData().forEach(data -> {
-            String percentage = String.format("%.1f%%", (data.getPieValue() / finalGrandTotal * 100));
-            String text = data.getName() + " : " + data.getPieValue() + "€ (" + percentage + ")";
+        pieChart.getData().forEach(dataSec -> {
+            String percentage = String.format("%.1f%%", (dataSec.getPieValue() / finalGrandTotal * 100));
+            String text = dataSec.getName() + " : " + dataSec.getPieValue() + "€ (" + percentage + ")";
             Tooltip tooltip = new Tooltip(text);
-            Tooltip.install(data.getNode(), tooltip);
+            Tooltip.install(dataSec.getNode(), tooltip);
         });
 
         logger.debug("Graphique en camembert créé avec succès");
@@ -86,7 +93,6 @@ public class PieChart {
 
     // Méthode pour mettre à jour le titre
     public void setTitle(String title) {
-        this.title = title;
         this.pieChart.setTitle(title);
     }
 }

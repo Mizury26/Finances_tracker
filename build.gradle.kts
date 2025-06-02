@@ -42,7 +42,7 @@ dependencies {
     implementation("org.slf4j:slf4j-api:2.0.12")
     implementation("org.slf4j:slf4j-simple:2.0.12")
     implementation("log4j:log4j:1.2.17")
-
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
 }
 
 tasks.withType<Test> {

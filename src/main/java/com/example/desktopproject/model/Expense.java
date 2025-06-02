@@ -13,12 +13,13 @@ public class Expense {
     private Float tax;
     private Float others;
 
+
     public Expense() {
     }
 
     public Expense(LocalDate periode, Float total, Float logement, Float nourriture,
-            Float sortie, Float voitureTransport, Float voyage,
-            Float impot, Float autres) {
+                   Float sortie, Float voitureTransport, Float voyage,
+                   Float impot, Float autres) {
         this.date = periode;
         this.total = total;
         this.housing = logement;

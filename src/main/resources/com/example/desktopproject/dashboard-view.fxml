@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
 
+<?import com.example.desktopproject.component.ToggleCustomButton?>
 <VBox stylesheets="@../../../css/style.css" alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.desktopproject.controller.DashboardController"
       prefHeight="600.0" prefWidth="900.0">

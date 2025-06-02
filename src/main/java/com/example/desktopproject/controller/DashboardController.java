@@ -42,6 +42,8 @@ public class DashboardController {
     public void initialize() {
         logger.debug("Initialisation du dashboard");
 
+
+
         // Initialisation du graphique en camembert
         pieChart = new PieChart("Répartition des dépenses");
         lineChart = new LineChart("Évolution des dépenses");
@@ -132,4 +134,5 @@ public class DashboardController {
                 .filter(expense -> expense.getDate().getMonth() == month)
                 .collect(Collectors.toList());
     }
+
 }

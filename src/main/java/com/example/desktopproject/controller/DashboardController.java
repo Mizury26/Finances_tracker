@@ -6,6 +6,7 @@ import com.example.desktopproject.db.ExpenseDAO;
 import com.example.desktopproject.model.Expense;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.util.StringConverter;
 import org.apache.log4j.Logger;
@@ -29,6 +30,9 @@ public class DashboardController {
 
     @FXML
     private ComboBox<Month> monthSelector;
+
+    @FXML
+    private Label noDataLabel;
 
     private List<Expense> allExpenses;
     private PieChart pieChart;
@@ -103,13 +107,23 @@ public class DashboardController {
             // Filtrer les dépenses pour le mois sélectionné
             List<Expense> monthlyExpenses = filterExpensesByMonth(selectedMonth);
 
+            boolean hasData = !monthlyExpenses.isEmpty();
+            noDataLabel.setVisible(!hasData);
+            pieChartContainer.setVisible(hasData);
+            lineChartContainer.setVisible(hasData);
+
             // Mettre à jour le titre avec le nom en français
             String monthName = selectedMonth.getDisplayName(TextStyle.FULL, Locale.FRANCE);
             pieChart.setTitle("Répartition des dépenses - " + monthName);
 
-            // Charger les données et créer les graphiques
-            pieChart.createChart(monthlyExpenses);
-            lineChart.createChart(monthlyExpenses, yearMonth);
+            if (hasData) {
+                pieChart.createChart(monthlyExpenses);
+                lineChart.createChart(monthlyExpenses, yearMonth);
+            } else {
+                // Effacer les graphiques précédents si nécessaire
+                pieChart.clear();
+                lineChart.clear();
+            }
         }
     }
 

@@ -23,13 +23,15 @@
         </columnConstraints>
 
         <!-- Graphique en camembert à gauche -->
-        <VBox GridPane.columnIndex="0" styleClass="chart-container">
-            <StackPane fx:id="pieChartContainer" VBox.vgrow="ALWAYS" styleClass="chart-pane"/>
-        </VBox>
+        <StackPane visible="true" fx:id="pieChartContainer" styleClass="chart-pane" GridPane.columnIndex="0"/>
 
         <!-- Graphique linéaire à droite -->
-        <VBox GridPane.columnIndex="1" styleClass="chart-container">
-            <StackPane fx:id="lineChartContainer" VBox.vgrow="ALWAYS" styleClass="chart-pane"/>
-        </VBox>
+        <StackPane visible="true" fx:id="lineChartContainer" styleClass="chart-pane" GridPane.columnIndex="1"/>
+
+        <!-- Label unique centré sur les deux colonnes -->
+        <Label text="Aucunes données disponibles"
+               visible="false" fx:id="noDataLabel" styleClass="no-data-label"
+               GridPane.columnIndex="0" GridPane.columnSpan="2"
+               GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
     </GridPane>
 </VBox>

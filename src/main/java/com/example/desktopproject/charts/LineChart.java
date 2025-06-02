@@ -23,6 +23,10 @@ public class LineChart {
     private NumberAxis yAxis;
     private YearMonth selectedMonth;
 
+    public void clear () {
+        this.lineChart.getData().clear();
+    }
+
     public LineChart(String title) {
         // Configuration des axes
         xAxis = new CategoryAxis();

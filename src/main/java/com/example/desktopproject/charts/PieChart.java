@@ -22,17 +22,14 @@ public class PieChart {
         this.pieChart.setTitle(title);
     }
 
-//    public void loadData(Object data) {
-//        if (data instanceof List) {
-//            this.expenses = (List<Expense>) data;
-//            logger.debug("Données chargées pour le graphique en camembert: " + expenses.size() + " dépenses");
-//        } else {
-//            logger.error("Type de données incorrect pour le graphique en camembert");
-//        }
-//    }
+    public void clear () {
+        this.pieChartData.clear();
+        this.pieChart.setData(pieChartData);
+        logger.debug("Graphique en camembert réinitialisé");
+    }
 
     public void createChart(Object data) {
-        pieChartData.clear(); // Réinitialiser les données du graphique
+        clear(); // Réinitialiser les données du graphique
 
         if (data instanceof List) {
             this.expenses = (List<Expense>) data;

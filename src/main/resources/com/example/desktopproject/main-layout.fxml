@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17"
             fx:controller="com.example.desktopproject.controller.MainLayoutController"
             stylesheets="@../../../css/style.css">
 
     <!-- Zone du header -->
-    <top>
+    <left>
         <fx:include source="header-view.fxml"/>
-    </top>
+    </left>
 
     <!-- Zone de contenu qui changera dynamiquement -->
     <center>

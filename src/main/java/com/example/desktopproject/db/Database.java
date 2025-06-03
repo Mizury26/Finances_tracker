@@ -1,12 +1,12 @@
 package com.example.desktopproject.db;
 
+import org.apache.log4j.Logger;
 import org.sqlite.JDBC;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import org.apache.log4j.Logger;
 
 public class Database {
     private static final Logger logger = Logger.getLogger(Database.class);
@@ -55,7 +55,6 @@ public class Database {
         String createTables = """
                      CREATE TABLE IF NOT EXISTS Expense(
                           date TEXT NOT NULL,
-                          total REAL NOT NULL,
                           housing REAL NOT NULL,
                           food REAL NOT NULL,
                           goingOut REAL NOT NULL,

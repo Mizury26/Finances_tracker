@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 public class Expense {
     private LocalDate date;
-    private Float total;
     private Float housing;
     private Float food;
     private Float goingOut;
@@ -17,18 +16,17 @@ public class Expense {
     public Expense() {
     }
 
-    public Expense(LocalDate periode, Float total, Float logement, Float nourriture,
-                   Float sortie, Float voitureTransport, Float voyage,
-                   Float impot, Float autres) {
-        this.date = periode;
-        this.total = total;
-        this.housing = logement;
-        this.food = nourriture;
-        this.goingOut = sortie;
-        this.transportation = voitureTransport;
-        this.travel = voyage;
-        this.tax = impot;
-        this.others = autres;
+    public Expense(LocalDate date, Float housing, Float food,
+                   Float goingOut, Float transportation, Float travel,
+                   Float tax, Float others) {
+        this.date = date;
+        this.housing = housing;
+        this.food = food;
+        this.goingOut = goingOut;
+        this.transportation = transportation;
+        this.travel = travel;
+        this.tax = tax;
+        this.others = others;
     }
 
     public LocalDate getDate() {
@@ -40,11 +38,7 @@ public class Expense {
     }
 
     public Float getTotal() {
-        return total;
-    }
-
-    public void setTotal(Float total) {
-        this.total = total;
+        return this.others + this.tax + this.transportation + this.goingOut + this.food + this.housing + this.travel;
     }
 
     public Float getHousing() {

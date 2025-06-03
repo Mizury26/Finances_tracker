@@ -174,7 +174,7 @@ public class DialogController extends Dialog<Expense> {
 
         logger.info("Nouvelle dépense créée pour la date: " + date + " avec un total de: " + total);
 
-        return new Expense(date, total, logement, nourriture, sortie,
+        return new Expense(date, logement, nourriture, sortie,
                 transport, voyage, impot, autres);
     }
 

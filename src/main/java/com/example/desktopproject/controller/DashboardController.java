@@ -17,7 +17,6 @@ import java.time.YearMonth;
 import java.time.format.TextStyle;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 public class DashboardController {
     private static final Logger logger = Logger.getLogger(DashboardController.class);
@@ -34,22 +33,29 @@ public class DashboardController {
     @FXML
     private Label noDataLabel;
 
-    private List<Expense> allExpenses;
+    private List<Expense> currentMonthExpenses;
+    private List<Expense> last12MonthExpenses;
     private PieChart pieChart;
     private LineChart lineChart;
+
+    private int currentMonth;
+    private int currentYear;
+
 
     @FXML
     public void initialize() {
         logger.debug("Initialisation du dashboard");
 
-
+        LocalDate now = LocalDate.now();
+        currentMonth = now.getMonthValue();
+        currentYear = now.getYear();
 
         // Initialisation du graphique en camembert
         pieChart = new PieChart("Répartition des dépenses");
         lineChart = new LineChart("Évolution des dépenses");
 
         // Chargement des données
-        loadAllExpenses();
+        loadExpenses();
 
         // Configuration du sélecteur de mois
         setupMonthSelector();
@@ -64,9 +70,9 @@ public class DashboardController {
         logger.debug("Dashboard initialisé avec succès");
     }
 
-    private void loadAllExpenses() {
-        allExpenses = ExpenseDAO.fetchAllDataFromDB();
-        logger.debug("Chargement de " + allExpenses.size() + " dépenses au total");
+    private void loadExpenses() {
+        currentMonthExpenses = ExpenseDAO.getByMonth(currentMonth, currentYear);
+        last12MonthExpenses = ExpenseDAO.get12MonthsBefore(currentMonth, currentYear);
     }
 
     private void setupMonthSelector() {
@@ -103,13 +109,13 @@ public class DashboardController {
     private void updateChartsForSelectedMonth() {
         if (monthSelector != null && monthSelector.getValue() != null) {
             Month selectedMonth = monthSelector.getValue();
-            int year = LocalDate.now().getYear();
-            YearMonth yearMonth = YearMonth.of(year, selectedMonth);
+            currentMonth = selectedMonth.getValue();
 
-            // Filtrer les dépenses pour le mois sélectionné
-            List<Expense> monthlyExpenses = filterExpensesByMonth(selectedMonth);
+            loadExpenses();
 
-            boolean hasData = !monthlyExpenses.isEmpty();
+            YearMonth yearMonth = YearMonth.of(currentYear, selectedMonth);
+
+            boolean hasData = !currentMonthExpenses.isEmpty();
             noDataLabel.setVisible(!hasData);
             pieChartContainer.setVisible(hasData);
             lineChartContainer.setVisible(hasData);
@@ -119,20 +125,14 @@ public class DashboardController {
             pieChart.setTitle("Répartition des dépenses - " + monthName);
 
             if (hasData) {
-                pieChart.createChart(monthlyExpenses);
-                lineChart.createChart(monthlyExpenses, yearMonth);
+                pieChart.createChart(currentMonthExpenses);
+                lineChart.createChart(last12MonthExpenses, yearMonth);
             } else {
                 // Effacer les graphiques précédents si nécessaire
                 pieChart.clear();
                 lineChart.clear();
             }
         }
-    }
-
-    private List<Expense> filterExpensesByMonth(Month month) {
-        return allExpenses.stream()
-                .filter(expense -> expense.getDate().getMonth() == month)
-                .collect(Collectors.toList());
     }
 
 }

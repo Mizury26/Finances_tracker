@@ -29,7 +29,6 @@ public class ExpenseDAO {
             while (resultSet.next()) {
                 try {
                     LocalDate date = LocalDate.parse(resultSet.getString("date"));
-                    Float total = resultSet.getFloat("total");
                     Float housing = resultSet.getFloat("housing");
                     Float food = resultSet.getFloat("food");
                     Float goingOut = resultSet.getFloat("goingOut");
@@ -38,10 +37,10 @@ public class ExpenseDAO {
                     Float tax = resultSet.getFloat("tax");
                     Float others = resultSet.getFloat("others");
 
-                    Expense expense = new Expense(date, total, housing, food, goingOut,
+                    Expense expense = new Expense(date, housing, food, goingOut,
                             transportation, travel, tax, others);
                     expenses.add(expense);
-                    logger.trace("Dépense chargée: " + date + " - " + total + "€");
+                    logger.trace("Dépense chargée: " + date + " - " + expense.getTotal() + "€");
                 } catch (Exception e) {
                     logger.error("Erreur lors du traitement d'une ligne de dépense", e);
                 }
@@ -54,7 +53,7 @@ public class ExpenseDAO {
     }
 
     public static void insertExpense(Expense expense) {
-        String query = "INSERT INTO Expense (date, total, housing, food, goingOut, transportation, travel, tax, others) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Expense (date, housing, food, goingOut, transportation, travel, tax, others) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         logger.debug("Tentative d'insertion d'une nouvelle dépense pour la date: " + expense.getDate());
 
         try (Connection connection = Database.connect()) {
@@ -62,14 +61,13 @@ public class ExpenseDAO {
 
             // Définir les valeurs dans l'ordre des colonnes
             preparedStatement.setString(1, expense.getDate().toString());
-            preparedStatement.setFloat(2, expense.getTotal());
-            preparedStatement.setFloat(3, expense.getHousing());
-            preparedStatement.setFloat(4, expense.getFood());
-            preparedStatement.setFloat(5, expense.getGoingOut());
-            preparedStatement.setFloat(6, expense.getTransportation());
-            preparedStatement.setFloat(7, expense.getTravel());
-            preparedStatement.setFloat(8, expense.getTax());
-            preparedStatement.setFloat(9, expense.getOthers());
+            preparedStatement.setFloat(2, expense.getHousing());
+            preparedStatement.setFloat(3, expense.getFood());
+            preparedStatement.setFloat(4, expense.getGoingOut());
+            preparedStatement.setFloat(5, expense.getTransportation());
+            preparedStatement.setFloat(6, expense.getTravel());
+            preparedStatement.setFloat(7, expense.getTax());
+            preparedStatement.setFloat(8, expense.getOthers());
 
             int rowsInserted = preparedStatement.executeUpdate();
             logger.info(rowsInserted + " dépense(s) insérée(s) en base de données pour la date: " + expense.getDate());
@@ -91,7 +89,7 @@ public class ExpenseDAO {
         String startDateStr = startDate.format(formatter);
         String endDateStr = endDate.format(formatter);
 
-        String sql = "SELECT (date, total, housing, food, goingOut, transportation, travel, tax, others) FROM Expense " +
+        String sql = "SELECT date, housing, food, goingOut, transportation, travel, tax, others FROM Expense " +
                 "WHERE date BETWEEN ? AND ? ORDER BY date";
 
         List<Expense> expenses = new ArrayList<>();
@@ -108,7 +106,6 @@ public class ExpenseDAO {
             while (resultSet.next()) {
                 try {
                     LocalDate date = LocalDate.parse(resultSet.getString("date"));
-                    Float total = resultSet.getFloat("total");
                     Float housing = resultSet.getFloat("housing");
                     Float food = resultSet.getFloat("food");
                     Float goingOut = resultSet.getFloat("goingOut");
@@ -117,10 +114,10 @@ public class ExpenseDAO {
                     Float tax = resultSet.getFloat("tax");
                     Float others = resultSet.getFloat("others");
 
-                    Expense expense = new Expense(date, total, housing, food, goingOut,
+                    Expense expense = new Expense(date, housing, food, goingOut,
                             transportation, travel, tax, others);
                     expenses.add(expense);
-                    logger.trace("Dépense chargée: " + date + " - " + total + "€");
+                    logger.trace("Dépense chargée: " + date + " - " + expense.getTotal() + "€");
                 } catch (Exception e) {
                     logger.error("Erreur lors du traitement d'une ligne de dépense", e);
                 }
@@ -136,9 +133,9 @@ public class ExpenseDAO {
 
 
     public static List<Expense> getByMonth(int month, int year) {
-        String datePattern = "__/" + String.format("%02d", month) + "/" + year;
+        String datePattern = year + "-" + String.format("%02d", month) + "-__";
 
-        String sql = "SELECT (date, total, housing, food, goingOut, transportation, travel, tax, others) FROM Expense " +
+        String sql = "SELECT date, housing, food, goingOut, transportation, travel, tax, others FROM Expense " +
                 "WHERE date LIKE ?";
 
         List<Expense> expenses = new ArrayList<>();
@@ -153,7 +150,6 @@ public class ExpenseDAO {
             while (resultSet.next()) {
                 try {
                     LocalDate date = LocalDate.parse(resultSet.getString("date"));
-                    Float total = resultSet.getFloat("total");
                     Float housing = resultSet.getFloat("housing");
                     Float food = resultSet.getFloat("food");
                     Float goingOut = resultSet.getFloat("goingOut");
@@ -162,10 +158,10 @@ public class ExpenseDAO {
                     Float tax = resultSet.getFloat("tax");
                     Float others = resultSet.getFloat("others");
 
-                    Expense expense = new Expense(date, total, housing, food, goingOut,
+                    Expense expense = new Expense(date, housing, food, goingOut,
                             transportation, travel, tax, others);
                     expenses.add(expense);
-                    logger.trace("Dépense chargée: " + date + " - " + total + "€");
+                    logger.trace("Dépense chargée: " + date + " - " + expense.getTotal() + "€");
                 } catch (Exception e) {
                     logger.error("Erreur lors du traitement d'une ligne de dépense", e);
                 }

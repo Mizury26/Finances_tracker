@@ -23,6 +23,10 @@ public class Income {
         this.other = other;
     }
 
+    public Float getTotal() {
+        return this.salary + this.helper + this.selfEnterprise + this.passiveIncome + this.other;
+    }
+
     public LocalDate getDate() {
         return date;
     }
@@ -35,8 +39,8 @@ public class Income {
         return salary;
     }
 
-    public void setSalary(Float housing) {
-        this.salary = housing;
+    public void setSalary(Float salary) {
+        this.salary = salary;
     }
 
     public Float getHelper() {

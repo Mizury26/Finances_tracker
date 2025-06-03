@@ -27,6 +27,11 @@
                     <PropertyValueFactory property="date"/>
                 </cellValueFactory>
             </TableColumn>
+            <TableColumn fx:id="totalColumn" editable="false" text="Total" prefWidth="80" styleClass="table-column">
+                <cellValueFactory>
+                    <PropertyValueFactory property="total"/>
+                </cellValueFactory>
+            </TableColumn>
             <TableColumn fx:id="salaryColumn" editable="false" text="Salaire" prefWidth="80" styleClass="table-column">
                 <cellValueFactory>
                     <PropertyValueFactory property="salary"/>

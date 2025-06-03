@@ -1,27 +1,27 @@
 package com.example.desktopproject.controller;
 
+import com.example.desktopproject.API.ApiCall;
 import com.example.desktopproject.component.ToggleCustomButton;
 import com.example.desktopproject.db.ExpenseDAO;
 import com.example.desktopproject.model.ChangeType;
 import com.example.desktopproject.model.Expense;
+import com.example.desktopproject.model.Income;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Dialog;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.TableView;
 import org.apache.log4j.Logger;
-import com.example.desktopproject.API.ApiCall;
 
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Optional;
 
-public class TableauController {
-    private static final Logger logger = Logger.getLogger(TableauController.class);
+public class IncomesTabController {
+    private static final Logger logger = Logger.getLogger(IncomesTabController.class);
 
     @FXML
     private ToggleCustomButton toggleCustomButton;
@@ -59,7 +59,7 @@ public class TableauController {
 
     @FXML
     public void initialize() {
-        logger.debug("Initialisation du TableauController");
+        logger.debug("Initialisation du IncomesTabController");
 
         // Récupération du taux de change une seule fois
         ChangeType rates = ApiCall.fetchData();
@@ -126,18 +126,18 @@ public class TableauController {
     }
 
     @FXML
-    public void addExpense() {
+    public void addIncomes() {
         logger.debug("Ouverture du dialogue d'ajout de dépense");
-        Dialog<Expense> dialog = new DialogController();
-        Optional<Expense> result = dialog.showAndWait();
+        Dialog<Income> dialog = new IncomeDialogController();
+        Optional<Income> result = dialog.showAndWait();
 
         if (result.isPresent()) {
-            Expense expense = result.get();
-            expenses.add(expense);
-            ExpenseDAO.insertExpense(expense);
-            logger.info("Dépense ajoutée: " + expense.getDate() + " - " + expense.getTotal() + "€");
+            Income income = result.get();
+            expenses.add(income);
+            ExpenseDAO.insertExpense(income);
+            logger.info("Revenus ajouté: " + income.getDate() + " - " + income.getTotal() + "€");
         } else {
-            logger.debug("Ajout de dépense annulé");
+            logger.debug("Ajout de revenus annulé");
         }
     }
 

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import com.example.desktopproject.component.ToggleCustomButton?>
+
+<VBox stylesheets="@../../../css/style.css" alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.desktopproject.controller.IncomesTabController"
+      prefHeight="600.0" prefWidth="900.0">
+
+    <padding>
+        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
+    </padding>
+
+    <Label styleClass="title" text="Tableau récapitulatif des revenus"/>
+    <ToggleCustomButton fx:id="toggleCustomButton" onAction="#combinedAction"/>
+
+    <TableView fx:id="tableView" VBox.vgrow="ALWAYS" styleClass="table-view">
+        <columns>
+            <TableColumn editable="false" text="Période" prefWidth="100" styleClass="table-column">
+                <cellValueFactory>
+                    <PropertyValueFactory property="date"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="salaryColumn" editable="false" text="Salaire" prefWidth="80" styleClass="table-column">
+                <cellValueFactory>
+                    <PropertyValueFactory property="salary"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="helperColumn" editable="false" text="Aides" prefWidth="80" styleClass="table-column">
+                <cellValueFactory>
+                    <PropertyValueFactory property="helper"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="selfEnterpriseColumn" editable="false" text="Auto-Entreprise" prefWidth="80" styleClass="table-column">
+                <cellValueFactory>
+                    <PropertyValueFactory property="selfEnterprise"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="passiveIncomeColumn" editable="false" text="Renenus passifs" prefWidth="120" styleClass="table-column">
+                <cellValueFactory>
+                    <PropertyValueFactory property="passiveIncome"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="otherColumn" editable="false" text="Autres" prefWidth="80" styleClass="table-column">
+                <cellValueFactory>
+                    <PropertyValueFactory property="other"/>
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
+    <Button text="Ajouter" onAction="#addIncomes" styleClass="button"/>
+</VBox>

@@ -14,8 +14,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DialogController extends Dialog<Expense> {
-    private static final Logger logger = Logger.getLogger(DialogController.class);
+public class ExpenseDialogController extends Dialog<Expense> {
+    private static final Logger logger = Logger.getLogger(ExpenseDialogController.class);
 
     @FXML
     private DatePicker periodeField;
@@ -38,7 +38,7 @@ public class DialogController extends Dialog<Expense> {
 
     private List<TextField> moneyFields = new ArrayList<>();
 
-    public DialogController() {
+    public ExpenseDialogController() {
         try {
             FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("add-expense-view.fxml"));
 

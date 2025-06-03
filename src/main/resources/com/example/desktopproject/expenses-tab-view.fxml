@@ -10,7 +10,7 @@
 <?import com.example.desktopproject.component.ToggleCustomButton?>
 
 <VBox stylesheets="@../../../css/style.css" alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.desktopproject.controller.TableauController"
+      fx:controller="com.example.desktopproject.controller.ExpensesTabController"
       prefHeight="600.0" prefWidth="900.0">
 
     <padding>

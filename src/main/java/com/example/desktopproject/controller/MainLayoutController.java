@@ -10,8 +10,7 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 
 public class MainLayoutController {
-    private static final Logger logger = Logger.getLogger(TableauController.class);
-
+    private static final Logger logger = Logger.getLogger(ExpensesTabController.class);
 
     @FXML
     private StackPane contentArea;

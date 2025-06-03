@@ -3,7 +3,7 @@ package com.example.desktopproject.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.Button;
 import org.apache.log4j.Logger;
 
 public class HeaderController {
@@ -12,11 +12,21 @@ public class HeaderController {
 
     @FXML
     public void changeScreen(ActionEvent event) {
-        MenuItem menuItem = (MenuItem) event.getSource();
-        String screen = (String) menuItem.getUserData();
+        Object source = event.getSource();
+        String screen = null;
+
+        if (source instanceof Button button) {
+            screen = (String) button.getUserData();
+        }
+
+        if (screen == null) {
+            logger.warn("Aucune vue spécifiée.");
+            return;
+        }
+
         logger.info("Changement d'écran vers : " + screen);
 
-        Scene scene = menuItem.getParentPopup().getOwnerWindow().getScene();
+        Scene scene = ((Button) source).getScene();
         MainLayoutController mainController = (MainLayoutController) scene.getUserData();
 
         switch (screen) {
@@ -30,10 +40,7 @@ public class HeaderController {
                 break;
             case "incomes":
                 mainController.loadView("incomes-tab-view.fxml");
-                logger.debug("Navigation vers les dépenses");
-                break;
-            default:
-                mainController.loadView("dashboard-view.fxml");
+                logger.debug("Navigation vers les revnue");
                 break;
         }
     }

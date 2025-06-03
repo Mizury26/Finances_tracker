@@ -6,7 +6,8 @@
 <?import javafx.scene.text.Font?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="navBar" styleClass="nav-bar" prefWidth="200"
       spacing="10"
-      fx:controller="com.example.desktopproject.controller.HeaderController">
+      fx:controller="com.example.desktopproject.controller.HeaderController"
+      stylesheets="@../../../css/header-style.css">
 
     <VBox alignment="CENTER" styleClass="nav-header">
         <padding>
@@ -41,7 +42,7 @@
     </Button>
 
     <Button fx:id="statsBtn" styleClass="nav-button"
-            onAction="#changeScreen" userData="statistics">
+            onAction="#changeScreen" userData="incomes">
         <graphic>
             <HBox spacing="10" alignment="CENTER_LEFT">
                 <Label text="📊" styleClass="nav-icon"/>

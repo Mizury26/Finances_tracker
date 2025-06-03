@@ -1,3 +1,19 @@
 .nav-bar {
     -fx-background-color: #191919;
 }
+
+.nav-button {
+    -fx-background-color: transparent;
+}
+
+.nav-button.active {
+    -fx-background-color: #2a9e93;
+}
+
+.nav-button Text {
+    -fx-fill: #898989;
+}
+
+.nav-button.active Text {
+    -fx-fill: white;
+}

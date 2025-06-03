@@ -3,10 +3,8 @@ package com.example.desktopproject.db;
 import org.apache.log4j.Logger;
 import org.sqlite.JDBC;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.List;
 
 public class Database {
     private static final Logger logger = Logger.getLogger(Database.class);
@@ -52,26 +50,51 @@ public class Database {
     }
 
     private static boolean createTableIfNotExists() {
-        String createTables = """
-                     CREATE TABLE IF NOT EXISTS Expense(
-                          date TEXT NOT NULL,
-                          housing REAL NOT NULL,
-                          food REAL NOT NULL,
-                          goingOut REAL NOT NULL,
-                          transportation REAL NOT NULL,
-                          travel REAL NOT NULL,
-                          tax REAL NOT NULL,
-                          others REAL NOT NULL
-                  );
-                """;
+        List<String> createTables = List.of(
+                """
+                CREATE TABLE IF NOT EXISTS Expense(
+                    date TEXT NOT NULL,
+                    housing REAL NOT NULL,
+                    food REAL NOT NULL,
+                    goingOut REAL NOT NULL,
+                    transportation REAL NOT NULL,
+                    travel REAL NOT NULL,
+                    tax REAL NOT NULL,
+                    others REAL NOT NULL
+                );
+                """,
+                """
+                CREATE TABLE IF NOT EXISTS Income(
+                    date TEXT NOT NULL,
+                    salary REAL NOT NULL,
+                    helper REAL NOT NULL,
+                    selfEnterprise REAL NOT NULL,
+                    passiveIncome REAL NOT NULL,
+                    other REAL NOT NULL
+                );
+                """
+        );
 
         try (Connection connection = Database.connect()) {
-            PreparedStatement statement = connection.prepareStatement(createTables);
-            statement.executeUpdate();
-            logger.debug("Table Expense vérifiée/créée avec succès");
+            if (connection == null) {
+                logger.error("Impossible de se connecter à la base de données pour créer les tables");
+                return false;
+            }
+
+            for (String createTableSQL : createTables) {
+                try (Statement statement = connection.createStatement()) {
+                    statement.execute(createTableSQL);
+                    logger.debug("Exécution de la requête SQL : " + createTableSQL.trim().substring(0, 40) + "...");
+                } catch (SQLException e) {
+                    logger.error("Erreur lors de l'exécution de la requête SQL : " + createTableSQL, e);
+                    return false;
+                }
+            }
+
+            logger.info("Toutes les tables ont été vérifiées/créées avec succès");
             return true;
         } catch (SQLException exception) {
-            logger.error("Could not find tables in database", exception);
+            logger.error("Erreur lors de la création des tables", exception);
             return false;
         }
     }

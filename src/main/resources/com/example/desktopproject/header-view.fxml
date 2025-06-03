@@ -1,17 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="navBar" styleClass="nav-bar" prefWidth="200"
+      spacing="10"
+      fx:controller="com.example.desktopproject.controller.HeaderController">
 
-<MenuBar xmlns:fx="http://javafx.com/fxml/1" fx:id="menuBar" fx:controller="com.example.desktopproject.controller.HeaderController">
-    <menus>
-        <Menu text="View">
-            <items>
-                <MenuItem text="Tableau de bord" onAction="#changeScreen" userData="dashboard" />
-                <MenuItem text="Dépenses" onAction="#changeScreen" userData="expenses" />
-                <MenuItem text="Revenus" onAction="#changeScreen" userData="incomes" />
+    <VBox alignment="CENTER" styleClass="nav-header">
+        <padding>
+            <Insets top="20" bottom="30"/>
+        </padding>
+        <Label text="Finance Tracker" styleClass="nav-title">
+            <font>
+                <Font name="System Bold" size="18.0"/>
+            </font>
+        </Label>
+    </VBox>
 
-            </items>
-        </Menu>
-    </menus>
-</MenuBar>
+    <!-- Boutons de navigation avec icônes textuelles -->
+    <Button fx:id="dashboardBtn" styleClass="nav-button"
+            onAction="#changeScreen" userData="dashboard">
+        <graphic>
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="⬛" styleClass="nav-icon"/>
+                <Label text="Tableau de bord"/>
+            </HBox>
+        </graphic>
+    </Button>
+
+    <Button fx:id="expensesBtn" styleClass="nav-button"
+            onAction="#changeScreen" userData="expenses">
+        <graphic>
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="€" styleClass="nav-icon"/>
+                <Label text="Dépenses"/>
+            </HBox>
+        </graphic>
+    </Button>
+
+    <Button fx:id="statsBtn" styleClass="nav-button"
+            onAction="#changeScreen" userData="statistics">
+        <graphic>
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="📊" styleClass="nav-icon"/>
+                <Label text="Statistiques"/>
+            </HBox>
+        </graphic>
+    </Button>
+
+    <!-- Espace flexible pour pousser les éléments suivants vers le bas -->
+    <VBox VBox.vgrow="ALWAYS"/>
+
+    <!-- Bouton de paramètres en bas de la barre -->
+    <Button fx:id="settingsBtn" styleClass="nav-button"
+            userData="settings">
+        <graphic>
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="⚙️" styleClass="nav-icon"/>
+                <Label text="Paramètres"/>
+            </HBox>
+        </graphic>
+    </Button>
+
+    <padding>
+        <Insets top="10" right="10" bottom="20" left="10"/>
+    </padding>
+</VBox>

@@ -40,11 +40,7 @@ public class Expense {
     }
 
     public Float getTotal() {
-        return total;
-    }
-
-    public void setTotal(Float total) {
-        this.total = total;
+        return this.others + this.tax + this.transportation + this.goingOut + this.food + this.housing + this.travel;
     }
 
     public Float getHousing() {

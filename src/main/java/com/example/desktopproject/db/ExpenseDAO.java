@@ -8,11 +8,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ExpenseDAO {
     private static final Logger logger = Logger.getLogger(ExpenseDAO.class);
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     // Modifier la signature pour retourner une List<Expense>
     public static List<Expense> fetchAllDataFromDB() {
@@ -21,8 +23,8 @@ public class ExpenseDAO {
         logger.debug("Récupération de toutes les dépenses depuis la BDD");
 
         try (Connection connection = Database.connect();
-                PreparedStatement preparedStatement = connection.prepareStatement(query);
-                ResultSet resultSet = preparedStatement.executeQuery()) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
                 try {
@@ -75,5 +77,105 @@ public class ExpenseDAO {
         } catch (SQLException e) {
             logger.error("Erreur lors de l'insertion d'une dépense", e);
         }
+    }
+
+    public static List<Expense> get12MonthsBefore(int month, int year) {
+        // Crée la date du dernier jour du mois donné
+        LocalDate endDate = LocalDate.of(year, month, 1).withDayOfMonth(1).plusMonths(1).minusDays(1);
+
+        // Crée la date du premier jour 11 mois avant
+        LocalDate startDate = endDate.minusMonths(11).withDayOfMonth(1);
+
+        // Formater les dates en chaînes (dd/MM/yyyy)
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String startDateStr = startDate.format(formatter);
+        String endDateStr = endDate.format(formatter);
+
+        String sql = "SELECT (date, total, housing, food, goingOut, transportation, travel, tax, others) FROM Expense " +
+                "WHERE date BETWEEN ? AND ? ORDER BY date";
+
+        List<Expense> expenses = new ArrayList<>();
+
+
+        try (Connection connection = Database.connect()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setString(1, startDateStr);
+            preparedStatement.setString(2, endDateStr);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                try {
+                    LocalDate date = LocalDate.parse(resultSet.getString("date"));
+                    Float total = resultSet.getFloat("total");
+                    Float housing = resultSet.getFloat("housing");
+                    Float food = resultSet.getFloat("food");
+                    Float goingOut = resultSet.getFloat("goingOut");
+                    Float transportation = resultSet.getFloat("transportation");
+                    Float travel = resultSet.getFloat("travel");
+                    Float tax = resultSet.getFloat("tax");
+                    Float others = resultSet.getFloat("others");
+
+                    Expense expense = new Expense(date, total, housing, food, goingOut,
+                            transportation, travel, tax, others);
+                    expenses.add(expense);
+                    logger.trace("Dépense chargée: " + date + " - " + total + "€");
+                } catch (Exception e) {
+                    logger.error("Erreur lors du traitement d'une ligne de dépense", e);
+                }
+
+            }
+
+        } catch (SQLException e) {
+            logger.error("Erreur lors de l'insertion d'une dépense", e);
+        }
+
+        return expenses;
+    }
+
+
+    public static List<Expense> getByMonth(int month, int year) {
+        String datePattern = "__/" + String.format("%02d", month) + "/" + year;
+
+        String sql = "SELECT (date, total, housing, food, goingOut, transportation, travel, tax, others) FROM Expense " +
+                "WHERE date LIKE ?";
+
+        List<Expense> expenses = new ArrayList<>();
+
+        try (Connection connection = Database.connect()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setString(1, datePattern);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                try {
+                    LocalDate date = LocalDate.parse(resultSet.getString("date"));
+                    Float total = resultSet.getFloat("total");
+                    Float housing = resultSet.getFloat("housing");
+                    Float food = resultSet.getFloat("food");
+                    Float goingOut = resultSet.getFloat("goingOut");
+                    Float transportation = resultSet.getFloat("transportation");
+                    Float travel = resultSet.getFloat("travel");
+                    Float tax = resultSet.getFloat("tax");
+                    Float others = resultSet.getFloat("others");
+
+                    Expense expense = new Expense(date, total, housing, food, goingOut,
+                            transportation, travel, tax, others);
+                    expenses.add(expense);
+                    logger.trace("Dépense chargée: " + date + " - " + total + "€");
+                } catch (Exception e) {
+                    logger.error("Erreur lors du traitement d'une ligne de dépense", e);
+                }
+
+            }
+
+        } catch (SQLException e) {
+            logger.error("Erreur lors de l'insertion d'une dépense", e);
+        }
+
+        return expenses;
     }
 }

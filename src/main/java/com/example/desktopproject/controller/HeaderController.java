@@ -25,7 +25,11 @@ public class HeaderController {
                 logger.debug("Navigation vers le tableau de bord");
                 break;
             case "expenses":
-                mainController.loadView("tableau-view.fxml");
+                mainController.loadView("expenses-tab-view.fxml");
+                logger.debug("Navigation vers les dépenses");
+                break;
+            case "incomes":
+                mainController.loadView("incomes-tab-view.fxml");
                 logger.debug("Navigation vers les dépenses");
                 break;
             default:

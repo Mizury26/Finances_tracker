@@ -1,9 +1,13 @@
 package com.example.desktopproject.controller;
 
+import com.example.desktopproject.charts.BarChart;
 import com.example.desktopproject.charts.LineChart;
 import com.example.desktopproject.charts.PieChart;
 import com.example.desktopproject.db.ExpenseDAO;
+import com.example.desktopproject.db.IncomeDAO;
 import com.example.desktopproject.model.Expense;
+import com.example.desktopproject.model.Income;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -28,6 +32,9 @@ public class DashboardController {
     private StackPane lineChartContainer;
 
     @FXML
+    private StackPane barChartContainer;
+
+    @FXML
     private ComboBox<Month> monthSelector;
 
     @FXML
@@ -35,8 +42,10 @@ public class DashboardController {
 
     private List<Expense> currentMonthExpenses;
     private List<Expense> last12MonthExpenses;
+    private List<Income> last12MonthIncomes;
     private PieChart pieChart;
     private LineChart lineChart;
+    private BarChart barChart;
 
     private int currentMonth;
     private int currentYear;
@@ -53,6 +62,7 @@ public class DashboardController {
         // Initialisation du graphique en camembert
         pieChart = new PieChart("Répartition des dépenses");
         lineChart = new LineChart("Évolution des dépenses");
+        barChart = new BarChart("Dépenses VS revenus");
 
         // Chargement des données
         loadExpenses();
@@ -63,6 +73,7 @@ public class DashboardController {
         // Ajout du graphique au conteneur
         pieChartContainer.getChildren().add(pieChart.getChartNode());
         lineChartContainer.getChildren().add(lineChart.getChartNode());
+        barChartContainer.getChildren().add(barChart.getChartNode());
 
         // Affichage du graphique
         updateChartsForSelectedMonth();
@@ -71,9 +82,16 @@ public class DashboardController {
     }
 
     private void loadExpenses() {
-        currentMonthExpenses = ExpenseDAO.getByMonth(currentMonth, currentYear);
-        last12MonthExpenses = ExpenseDAO.get12MonthsBefore(currentMonth, currentYear);
-    }
+    currentMonthExpenses = ExpenseDAO.getByMonth(currentMonth, currentYear);
+    last12MonthExpenses = ExpenseDAO.get12MonthsBefore(currentMonth, currentYear);
+    last12MonthIncomes = IncomeDAO.get12MonthsBefore(currentMonth, currentYear);
+    System.out.println("Chargement des dépenses du mois " + currentMonth + " de l'année " + currentYear);
+    System.out.println(last12MonthExpenses);
+
+    logger.debug("Chargement de " + currentMonthExpenses.size() + " dépenses du mois et " + 
+                 last12MonthExpenses.size() + " dépenses des 12 derniers mois");
+    logger.debug("Chargement de " + last12MonthIncomes.size() + " revenus des 12 derniers mois");
+}
 
     private void setupMonthSelector() {
         if (monthSelector != null) {
@@ -119,19 +137,30 @@ public class DashboardController {
             noDataLabel.setVisible(!hasData);
             pieChartContainer.setVisible(hasData);
             lineChartContainer.setVisible(hasData);
+            barChartContainer.setVisible(hasData && !last12MonthIncomes.isEmpty()); // Vérification pour le barChart
+
 
             // Mettre à jour le titre avec le nom en français
             String monthName = selectedMonth.getDisplayName(TextStyle.FULL, Locale.FRANCE);
             pieChart.setTitle("Répartition des dépenses - " + monthName);
-
-            if (hasData) {
-                pieChart.createChart(currentMonthExpenses);
-                lineChart.createChart(last12MonthExpenses, yearMonth);
+            barChart.setTitle("Dépenses vs revenus - " + monthName);
+            
+        if (hasData) {
+            pieChart.createChart(currentMonthExpenses);
+            lineChart.createChart(last12MonthExpenses, yearMonth);
+            
+            // Mise à jour du graphique à barres
+            if (!last12MonthIncomes.isEmpty()) {
+                barChart.createChart(last12MonthExpenses, last12MonthIncomes, selectedMonth);
             } else {
-                // Effacer les graphiques précédents si nécessaire
-                pieChart.clear();
-                lineChart.clear();
+                barChart.clear();
             }
+        } else {
+            // Effacer les graphiques précédents si nécessaire
+            pieChart.clear();
+            lineChart.clear();
+            barChart.clear();
+        }
         }
     }
 

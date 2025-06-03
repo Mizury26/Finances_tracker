@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -119,6 +120,10 @@ public class IncomeDAO {
         LocalDate endDate = LocalDate.of(year, month, 1).withDayOfMonth(1).plusMonths(1).minusDays(1);
         LocalDate startDate = endDate.minusMonths(11).withDayOfMonth(1);
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String startDateStr = startDate.format(formatter);
+        String endDateStr = endDate.format(formatter);
+
         String query = "SELECT * FROM Income WHERE date BETWEEN ? AND ?";
         List<Income> incomes = new ArrayList<>();
         logger.debug("Récupération des revenus des 12 mois précédents à partir de: " + startDate + " jusqu'à: " + endDate);
@@ -126,8 +131,8 @@ public class IncomeDAO {
         try (Connection connection = Database.connect();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setString(1, startDate.toString());
-            preparedStatement.setString(2, endDate.toString());
+            preparedStatement.setString(1, startDateStr);
+            preparedStatement.setString(2, endDateStr);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 

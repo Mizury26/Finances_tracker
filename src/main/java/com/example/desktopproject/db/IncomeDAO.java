@@ -61,11 +61,11 @@ public class IncomeDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, income.getDate().toString());
-            preparedStatement.setFloat(2, income.getSalary());
-            preparedStatement.setFloat(3, income.getHelper());
-            preparedStatement.setFloat(4, income.getSelfEnterprise());
-            preparedStatement.setFloat(5, income.getPassiveIncome());
-            preparedStatement.setFloat(6, income.getOther());
+            preparedStatement.setFloat(2, income.getStrictSalary());
+            preparedStatement.setFloat(3, income.getStrictHelper());
+            preparedStatement.setFloat(4, income.getStrictSelfEnterprise());
+            preparedStatement.setFloat(5, income.getStrictPassiveIncome());
+            preparedStatement.setFloat(6, income.getStrictOther());
 
             int rowsInserted = preparedStatement.executeUpdate();
             logger.info(rowsInserted + " revenu(x) inséré(s) en base de données pour la date: " + income.getDate());

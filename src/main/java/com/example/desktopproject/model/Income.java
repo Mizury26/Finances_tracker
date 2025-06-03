@@ -2,7 +2,7 @@ package com.example.desktopproject.model;
 
 import java.time.LocalDate;
 
-public class Income {
+public class Income extends Monetary {
     private LocalDate date;
     private Float salary;
     private Float helper;
@@ -23,7 +23,11 @@ public class Income {
         this.other = other;
     }
 
-    public Float getTotal() {
+    public String getTotal() {
+        return (this.salary + this.helper + this.selfEnterprise + this.passiveIncome + this.other) * Monetary.rate + Monetary.unit;
+    }
+
+    public Float getStrictTotal() {
         return this.salary + this.helper + this.selfEnterprise + this.passiveIncome + this.other;
     }
 
@@ -35,43 +39,63 @@ public class Income {
         this.date = date;
     }
 
-    public Float getSalary() {
-        return salary;
+    public String getSalary() {
+        return salary * Monetary.rate + Monetary.unit;
     }
 
     public void setSalary(Float salary) {
         this.salary = salary;
     }
 
-    public Float getHelper() {
-        return helper;
+    public Float getStrictSalary() {
+        return salary;
+    }
+
+    public String getHelper() {
+        return helper * Monetary.rate + Monetary.unit;
     }
 
     public void setHelper(Float helper) {
         this.helper = helper;
     }
 
-    public Float getSelfEnterprise() {
-        return selfEnterprise;
+    public Float getStrictHelper() {
+        return helper;
+    }
+
+    public String getSelfEnterprise() {
+        return selfEnterprise * Monetary.rate + Monetary.unit;
     }
 
     public void setSelfEnterprise(Float selfEnterprise) {
         this.selfEnterprise = selfEnterprise;
     }
 
-    public Float getPassiveIncome() {
-        return passiveIncome;
+    public Float getStrictSelfEnterprise() {
+        return selfEnterprise;
+    }
+
+    public String getPassiveIncome() {
+        return passiveIncome * Monetary.rate + Monetary.unit;
     }
 
     public void setPassiveIncome(Float passiveIncome) {
         this.passiveIncome = passiveIncome;
     }
 
-    public Float getOther() {
-        return other;
+    public Float getStrictPassiveIncome() {
+        return passiveIncome;
+    }
+
+    public String getOther() {
+        return other * Monetary.rate + Monetary.unit;
     }
 
     public void setOther(Float others) {
         this.other = others;
+    }
+
+    public Float getStrictOther() {
+        return other;
     }
 }

@@ -1,12 +1,8 @@
 package com.example.desktopproject.component;
 
+import com.example.desktopproject.model.Monetary;
 import javafx.animation.TranslateTransition;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -31,7 +27,7 @@ public class ToggleCustomButton extends HBox {
     private final BooleanProperty selected = new SimpleBooleanProperty(false);
     private final StringProperty leftValue = new SimpleStringProperty("€");
     private final StringProperty rightValue = new SimpleStringProperty("$");
-    private final StringProperty label = new SimpleStringProperty();
+    private final StringProperty selectedLabel = new SimpleStringProperty();
     private final ObjectProperty<EventHandler<ActionEvent>> onAction = new SimpleObjectProperty<>();
 
     public ToggleCustomButton() {
@@ -41,6 +37,8 @@ public class ToggleCustomButton extends HBox {
     }
 
     private void initGraphics() {
+        selectedLabel.set(Monetary.unit);
+
         setAlignment(Pos.CENTER);
 
         // Configuration du fond avec couleur bleue
@@ -55,8 +53,8 @@ public class ToggleCustomButton extends HBox {
 
         // Configuration du curseur
         thumb.setPrefSize(THUMB_WIDTH, HEIGHT - 4);
-        thumb.setStyle("-fx-background-radius: " + (HEIGHT/2) + "px; -fx-background-color: white;");
-        thumb.setTranslateX(WIDTH - THUMB_WIDTH - 2);
+        thumb.setStyle("-fx-background-radius: " + (HEIGHT / 2) + "px; -fx-background-color: white;");
+        thumb.setTranslateX(selectedLabel.get() == "€" ? WIDTH - THUMB_WIDTH - 2 : 2);
         thumb.setTranslateY(2);
 
         // Positionnement des labels avec taille augmentée
@@ -83,7 +81,7 @@ public class ToggleCustomButton extends HBox {
         getChildren().add(switchContainer);
 
         // Valeur initiale
-        label.set(leftValue.get());
+        selectedLabel.set(leftValue.get());
     }
 
     private void registerListeners() {
@@ -94,10 +92,10 @@ public class ToggleCustomButton extends HBox {
         selected.addListener((obs, oldVal, newVal) -> {
             if (newVal) {
                 animateThumb(2);
-                label.set(rightValue.get());
+                selectedLabel.set(rightValue.get());
             } else {
                 animateThumb(WIDTH - THUMB_WIDTH - 2);
-                label.set(leftValue.get());
+                selectedLabel.set(leftValue.get());
             }
 
             if (onAction.get() != null) {
@@ -121,36 +119,36 @@ public class ToggleCustomButton extends HBox {
         selected.set(!selected.get());
     }
 
+    public final EventHandler<ActionEvent> getOnAction() {
+        return onAction.get();
+    }
+
     // Méthodes complètes pour la propriété onAction
     public final void setOnAction(EventHandler<ActionEvent> value) {
         onAction.set(value);
-    }
-
-    public final EventHandler<ActionEvent> getOnAction() {
-        return onAction.get();
     }
 
     public final ObjectProperty<EventHandler<ActionEvent>> onActionProperty() {
         return onAction;
     }
 
-    public final String getLabel() {
-        return label.get();
+    public final String getSelectedLabel() {
+        return selectedLabel.get();
     }
 
-    public final void setLabel(String labelText) {
-        label.set(labelText);
+    public final void setSelectedLabel(String labelText) {
+        selectedLabel.set(labelText);
     }
 
-    public final StringProperty labelProperty() {
-        return label;
+    public final StringProperty selectedLabelProperty() {
+        return selectedLabel;
     }
 
     public void setLeftValue(String value) {
         leftValue.set(value);
         updateLabels();
         if (!selected.get()) {
-            label.set(value);
+            selectedLabel.set(value);
         }
     }
 
@@ -158,7 +156,7 @@ public class ToggleCustomButton extends HBox {
         rightValue.set(value);
         updateLabels();
         if (selected.get()) {
-            label.set(value);
+            selectedLabel.set(value);
         }
     }
 
@@ -166,11 +164,11 @@ public class ToggleCustomButton extends HBox {
         return selected.get();
     }
 
-    public BooleanProperty selectedProperty() {
-        return selected;
-    }
-
     public void setSelected(boolean value) {
         selected.set(value);
+    }
+
+    public BooleanProperty selectedProperty() {
+        return selected;
     }
 }

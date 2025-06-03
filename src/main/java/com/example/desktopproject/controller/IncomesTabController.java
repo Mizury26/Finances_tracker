@@ -5,8 +5,7 @@ import com.example.desktopproject.component.ToggleCustomButton;
 import com.example.desktopproject.db.IncomeDAO;
 import com.example.desktopproject.model.ChangeType;
 import com.example.desktopproject.model.Income;
-import com.example.desktopproject.model.Income;
-import javafx.beans.property.SimpleStringProperty;
+import com.example.desktopproject.model.Monetary;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,33 +21,24 @@ import java.util.Optional;
 
 public class IncomesTabController {
     private static final Logger logger = Logger.getLogger(IncomesTabController.class);
-
+    private final ObservableList<Income> incomes = FXCollections.observableArrayList();
+    private final DecimalFormat formatter = new DecimalFormat("#,##0.00");
     @FXML
     private ToggleCustomButton toggleCustomButton;
-
     @FXML
     private TableView<Income> tableView;
-
     @FXML
     private TableColumn<Income, String> totalColumn;
-
     @FXML
     private TableColumn<Income, String> salaryColumn;
-
     @FXML
     private TableColumn<Income, String> helperColumn;
-
     @FXML
     private TableColumn<Income, String> selfEnterpriseColumn;
-
     @FXML
     private TableColumn<Income, String> passiveIncomeColumn;
-
     @FXML
     private TableColumn<Income, String> otherColumn;
-
-    private ObservableList<Income> incomes = FXCollections.observableArrayList();
-    private DecimalFormat formatter = new DecimalFormat("#,##0.00");
     private double exchangeRate = 1.0; // Taux de change EUR -> USD
 
     @FXML
@@ -61,9 +51,6 @@ public class IncomesTabController {
             exchangeRate = rates.getRate("EUR"); // ou la méthode appropriée pour récupérer le taux USD
         }
 
-        // Configuration des colonnes monétaires
-        setupCurrencyColumns();
-
         List<Income> dbIncomes = IncomeDAO.fetchAllDataFromDB();
         incomes.addAll(dbIncomes);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -73,36 +60,7 @@ public class IncomesTabController {
 
         toggleCustomButton.setLeftValue("€");
         toggleCustomButton.setRightValue("$");
-        toggleCustomButton.setOnAction(event -> convertCurrency());
-    }
-
-    private void setupCurrencyColumns() {
-        // Configuration des colonnes pour afficher les données du modèle Income
-
-        salaryColumn.setCellValueFactory(cellData -> {
-            Income income = cellData.getValue();
-            return new SimpleStringProperty(formatter.format(income.getSalary()) + " €");
-        });
-
-        helperColumn.setCellValueFactory(cellData -> {
-            Income income = cellData.getValue();
-            return new SimpleStringProperty(formatter.format(income.getHelper()) + " €");
-        });
-
-        selfEnterpriseColumn.setCellValueFactory(cellData -> {
-            Income income = cellData.getValue();
-            return new SimpleStringProperty(formatter.format(income.getSelfEnterprise()) + " €");
-        });
-
-        passiveIncomeColumn.setCellValueFactory(cellData -> {
-            Income income = cellData.getValue();
-            return new SimpleStringProperty(formatter.format(income.getPassiveIncome()) + " €");
-        });
-
-        otherColumn.setCellValueFactory(cellData -> {
-            Income income = cellData.getValue();
-            return new SimpleStringProperty(formatter.format(income.getOther()) + " €");
-        });
+        toggleCustomButton.setOnAction(this::combinedAction);
     }
 
     @FXML
@@ -123,83 +81,13 @@ public class IncomesTabController {
 
     @FXML
     public void combinedAction(ActionEvent event) {
-        convertCurrency();
-    }
-
-    private void convertCurrency() {
-        if (toggleCustomButton.getLabel().equals("$")) {
-            logger.info("Conversion des dépenses en dollars");
-            // Conversion vers dollars pour toutes les colonnes
-            totalColumn.setCellValueFactory(cellData -> {
-                Income income = cellData.getValue();
-                double converted = income.getTotal() * exchangeRate;
-                return new SimpleStringProperty(formatter.format(converted) + " $");
-            });
-
-            salaryColumn.setCellValueFactory(cellData -> {
-                Income income = cellData.getValue();
-                double converted = income.getSalary() * exchangeRate;
-                return new SimpleStringProperty(formatter.format(converted) + " $");
-            });
-
-            helperColumn.setCellValueFactory(cellData -> {
-                Income income = cellData.getValue();
-                double converted = income.getHelper() * exchangeRate;
-                return new SimpleStringProperty(formatter.format(converted) + " $");
-            });
-
-            selfEnterpriseColumn.setCellValueFactory(cellData -> {
-                Income income = cellData.getValue();
-                double converted = income.getSelfEnterprise() * exchangeRate;
-                return new SimpleStringProperty(formatter.format(converted) + " $");
-            });
-
-            passiveIncomeColumn.setCellValueFactory(cellData -> {
-                Income income = cellData.getValue();
-                double converted = income.getPassiveIncome() * exchangeRate;
-                return new SimpleStringProperty(formatter.format(converted) + " $");
-            });
-
-            otherColumn.setCellValueFactory(cellData -> {
-                Income income = cellData.getValue();
-                double converted = income.getOther() * exchangeRate;
-                return new SimpleStringProperty(formatter.format(converted) + " $");
-            });
+        if (toggleCustomButton.getSelectedLabel().equals("$")) {
+            Monetary.rate = (float) exchangeRate;
         } else {
-            logger.info("Affichage des dépenses en euros");
-            // Retour aux euros (valeurs originales)
-            totalColumn.setCellValueFactory(cellData -> {
-                Income income = cellData.getValue();
-                return new SimpleStringProperty(formatter.format(income.getTotal()) + " €");
-            });
-
-            salaryColumn.setCellValueFactory(cellData -> {
-                Income income = cellData.getValue();
-                return new SimpleStringProperty(formatter.format(income.getSalary()) + " €");
-            });
-
-            helperColumn.setCellValueFactory(cellData -> {
-                Income income = cellData.getValue();
-                return new SimpleStringProperty(formatter.format(income.getHelper()) + " €");
-            });
-
-            selfEnterpriseColumn.setCellValueFactory(cellData -> {
-                Income income = cellData.getValue();
-                return new SimpleStringProperty(formatter.format(income.getSelfEnterprise()) + " €");
-            });
-
-            passiveIncomeColumn.setCellValueFactory(cellData -> {
-                Income income = cellData.getValue();
-                return new SimpleStringProperty(formatter.format(income.getPassiveIncome()) + " €");
-            });
-
-            otherColumn.setCellValueFactory(cellData -> {
-                Income income = cellData.getValue();
-                return new SimpleStringProperty(formatter.format(income.getOther()) + " €");
-            });
+            Monetary.rate = 1f;
         }
 
-        // Rafraîchir le tableau
+        Monetary.unit = toggleCustomButton.getSelectedLabel();
         tableView.refresh();
     }
 }

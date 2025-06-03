@@ -11,18 +11,16 @@ import java.util.List;
 
 public class PieChart {
     private static final Logger logger = Logger.getLogger(PieChart.class);
-
-    private javafx.scene.chart.PieChart pieChart;
-    private List<Expense> expenses;
-
+    private final javafx.scene.chart.PieChart pieChart;
     public ObservableList<javafx.scene.chart.PieChart.Data> pieChartData = FXCollections.observableArrayList();
+    private List<Expense> expenses;
 
     public PieChart(String title) {
         this.pieChart = new javafx.scene.chart.PieChart();
         this.pieChart.setTitle(title);
     }
 
-    public void clear () {
+    public void clear() {
         this.pieChartData.clear();
         this.pieChart.setData(pieChartData);
         logger.debug("Graphique en camembert réinitialisé");
@@ -49,25 +47,32 @@ public class PieChart {
         float grandTotal = 0;
 
         for (Expense expense : expenses) {
-            totalLogement += expense.getHousing();
-            totalNourriture += expense.getFood();
-            totalSortie += expense.getGoingOut();
-            totalTransport += expense.getTransportation();
-            totalVoyage += expense.getTravel();
-            totalImpot += expense.getTax();
-            totalAutres += expense.getOthers();
-            grandTotal += expense.getTotal();
+            totalLogement += expense.getStrictHousing();
+            totalNourriture += expense.getStrictFood();
+            totalSortie += expense.getStrictGoingOut();
+            totalTransport += expense.getStrictTransportation();
+            totalVoyage += expense.getStrictTravel();
+            totalImpot += expense.getStrictTax();
+            totalAutres += expense.getStrictOthers();
+            grandTotal += expense.getStrictTotal();
         }
 
 
         // N'ajouter que les catégories avec des dépenses > 0
-        if (totalLogement > 0) pieChartData.add(new javafx.scene.chart.PieChart.Data("Logement", totalLogement));
-        if (totalNourriture > 0) pieChartData.add(new javafx.scene.chart.PieChart.Data("Nourriture", totalNourriture));
-        if (totalSortie > 0) pieChartData.add(new javafx.scene.chart.PieChart.Data("Sorties", totalSortie));
-        if (totalTransport > 0) pieChartData.add(new javafx.scene.chart.PieChart.Data("Transport", totalTransport));
-        if (totalVoyage > 0) pieChartData.add(new javafx.scene.chart.PieChart.Data("Voyages", totalVoyage));
-        if (totalImpot > 0) pieChartData.add(new javafx.scene.chart.PieChart.Data("Impôts", totalImpot));
-        if (totalAutres > 0) pieChartData.add(new javafx.scene.chart.PieChart.Data("Autres", totalAutres));
+        if (totalLogement > 0)
+            pieChartData.add(new javafx.scene.chart.PieChart.Data("Logement", totalLogement));
+        if (totalNourriture > 0)
+            pieChartData.add(new javafx.scene.chart.PieChart.Data("Nourriture", totalNourriture));
+        if (totalSortie > 0)
+            pieChartData.add(new javafx.scene.chart.PieChart.Data("Sorties", totalSortie));
+        if (totalTransport > 0)
+            pieChartData.add(new javafx.scene.chart.PieChart.Data("Transport", totalTransport));
+        if (totalVoyage > 0)
+            pieChartData.add(new javafx.scene.chart.PieChart.Data("Voyages", totalVoyage));
+        if (totalImpot > 0)
+            pieChartData.add(new javafx.scene.chart.PieChart.Data("Impôts", totalImpot));
+        if (totalAutres > 0)
+            pieChartData.add(new javafx.scene.chart.PieChart.Data("Autres", totalAutres));
 
         // Mettre à jour le graphique
         pieChart.setData(pieChartData);

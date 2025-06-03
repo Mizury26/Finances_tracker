@@ -3,7 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.*?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="navBar" styleClass="nav-bar" prefWidth="200"
       spacing="10"
       fx:controller="com.example.desktopproject.controller.HeaderController"
@@ -22,31 +22,31 @@
 
     <!-- Boutons de navigation avec icônes textuelles -->
     <Button fx:id="dashboardBtn" styleClass="nav-button"
-            onAction="#changeScreen" userData="dashboard">
+            onAction="#changeScreen" userData="dashboard" maxWidth="Infinity">
         <graphic>
             <HBox spacing="10" alignment="CENTER_LEFT">
-                <Label text="⬛" styleClass="nav-icon"/>
-                <Label text="Tableau de bord"/>
+                <Text text="📊" styleClass="nav-icon"/>
+                <Text text="Tableau de bord"/>
             </HBox>
         </graphic>
     </Button>
 
     <Button fx:id="expensesBtn" styleClass="nav-button"
-            onAction="#changeScreen" userData="expenses">
+            onAction="#changeScreen" userData="expenses" maxWidth="Infinity">
         <graphic>
             <HBox spacing="10" alignment="CENTER_LEFT">
-                <Label text="€" styleClass="nav-icon"/>
-                <Label text="Dépenses"/>
+                <Text text="€" styleClass="nav-icon"/>
+                <Text text="Dépenses"/>
             </HBox>
         </graphic>
     </Button>
 
     <Button fx:id="statsBtn" styleClass="nav-button"
-            onAction="#changeScreen" userData="incomes">
+            onAction="#changeScreen" userData="incomes" maxWidth="Infinity">
         <graphic>
             <HBox spacing="10" alignment="CENTER_LEFT">
-                <Label text="📊" styleClass="nav-icon"/>
-                <Label text="Statistiques"/>
+                <Text text="€" styleClass="nav-icon"/>
+                <Text text="Revenus"/>
             </HBox>
         </graphic>
     </Button>
@@ -59,8 +59,8 @@
             userData="settings">
         <graphic>
             <HBox spacing="10" alignment="CENTER_LEFT">
-                <Label text="⚙️" styleClass="nav-icon"/>
-                <Label text="Paramètres"/>
+                <Text text="⚙️" styleClass="nav-icon"/>
+                <Text text="Paramètres"/>
             </HBox>
         </graphic>
     </Button>

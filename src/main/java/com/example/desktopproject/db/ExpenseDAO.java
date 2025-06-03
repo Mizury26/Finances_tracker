@@ -61,13 +61,13 @@ public class ExpenseDAO {
 
             // Définir les valeurs dans l'ordre des colonnes
             preparedStatement.setString(1, expense.getDate().toString());
-            preparedStatement.setFloat(2, expense.getHousing());
-            preparedStatement.setFloat(3, expense.getFood());
-            preparedStatement.setFloat(4, expense.getGoingOut());
-            preparedStatement.setFloat(5, expense.getTransportation());
-            preparedStatement.setFloat(6, expense.getTravel());
-            preparedStatement.setFloat(7, expense.getTax());
-            preparedStatement.setFloat(8, expense.getOthers());
+            preparedStatement.setFloat(2, expense.getStrictHousing());
+            preparedStatement.setFloat(3, expense.getStrictFood());
+            preparedStatement.setFloat(4, expense.getStrictGoingOut());
+            preparedStatement.setFloat(5, expense.getStrictTransportation());
+            preparedStatement.setFloat(6, expense.getStrictTravel());
+            preparedStatement.setFloat(7, expense.getStrictTax());
+            preparedStatement.setFloat(8, expense.getStrictOthers());
 
             int rowsInserted = preparedStatement.executeUpdate();
             logger.info(rowsInserted + " dépense(s) insérée(s) en base de données pour la date: " + expense.getDate());

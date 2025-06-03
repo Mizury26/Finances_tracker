@@ -18,10 +18,10 @@ import java.util.stream.Collectors;
 public class BarChart {
     private static final Logger logger = Logger.getLogger(BarChart.class);
 
-    private javafx.scene.chart.BarChart<String, Number> barChart;
-    private CategoryAxis xAxis;
-    private NumberAxis yAxis;
-    private DecimalFormat formatter = new DecimalFormat("#,##0.00");
+    private final javafx.scene.chart.BarChart<String, Number> barChart;
+    private final CategoryAxis xAxis;
+    private final NumberAxis yAxis;
+    private final DecimalFormat formatter = new DecimalFormat("#,##0.00");
 
     public BarChart(String title) {
         // Configuration des axes
@@ -34,7 +34,7 @@ public class BarChart {
         barChart = new javafx.scene.chart.BarChart<>(xAxis, yAxis);
         barChart.setTitle(title);
         barChart.setAnimated(true);
-        
+
         // Style du graphique pour une meilleure lisibilité
         barChart.setLegendVisible(true);
         barChart.setCategoryGap(20);
@@ -88,6 +88,7 @@ public class BarChart {
 
     /**
      * Retourne une liste des 12 mois précédents à partir du mois sélectionné, dans l'ordre chronologique
+     *
      * @param selectedMonth Le mois sélectionné
      * @return Liste des 12 mois précédents, incluant le mois sélectionné
      */
@@ -116,7 +117,7 @@ public class BarChart {
                         .collect(Collectors.groupingBy(
                                 expense -> expense.getDate().getMonth(),
                                 Collectors.collectingAndThen(
-                                        Collectors.summingDouble(expense -> expense.getTotal()),
+                                        Collectors.summingDouble(expense -> expense.getStrictTotal()),
                                         result -> result.floatValue()
                                 )
                         ));
@@ -126,7 +127,7 @@ public class BarChart {
                         .collect(Collectors.groupingBy(
                                 income -> income.getDate().getMonth(),
                                 Collectors.collectingAndThen(
-                                        Collectors.summingDouble(income -> income.getTotal()),
+                                        Collectors.summingDouble(income -> income.getStrictTotal()),
                                         result -> result.floatValue()
                                 )
                         ));
@@ -143,7 +144,7 @@ public class BarChart {
             Tooltip tooltip = new Tooltip(data.getXValue() + "\nDépenses : " + formattedValue + " €");
             tooltip.setStyle("-fx-font-size: 12px; -fx-font-weight: bold;");
             Tooltip.install(data.getNode(), tooltip);
-            
+
             // Effet visuel au survol
             data.getNode().setOnMouseEntered(event -> data.getNode().setStyle("-fx-opacity: 0.8;"));
             data.getNode().setOnMouseExited(event -> data.getNode().setStyle("-fx-opacity: 1;"));
@@ -154,7 +155,7 @@ public class BarChart {
             Tooltip tooltip = new Tooltip(data.getXValue() + "\nRevenus : " + formattedValue + " €");
             tooltip.setStyle("-fx-font-size: 12px; -fx-font-weight: bold;");
             Tooltip.install(data.getNode(), tooltip);
-            
+
             // Effet visuel au survol
             data.getNode().setOnMouseEntered(event -> data.getNode().setStyle("-fx-opacity: 0.8;"));
             data.getNode().setOnMouseExited(event -> data.getNode().setStyle("-fx-opacity: 1;"));

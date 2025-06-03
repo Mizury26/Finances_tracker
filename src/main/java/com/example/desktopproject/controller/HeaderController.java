@@ -8,7 +8,16 @@ import org.apache.log4j.Logger;
 
 public class HeaderController {
     private static final Logger logger = Logger.getLogger(HeaderController.class);
+    private Button activeButton;
 
+    @FXML
+    private Button dashboardBtn;
+
+    @FXML
+    public void initialize() {
+        activeButton = dashboardBtn;
+        activeButton.getStyleClass().add("active");
+    }
 
     @FXML
     public void changeScreen(ActionEvent event) {
@@ -17,6 +26,13 @@ public class HeaderController {
 
         if (source instanceof Button button) {
             screen = (String) button.getUserData();
+
+            if (activeButton != null) {
+                activeButton.getStyleClass().remove("active");
+            }
+
+            button.getStyleClass().add("active");
+            activeButton = button;
         }
 
         if (screen == null) {

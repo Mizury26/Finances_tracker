@@ -1,19 +1,19 @@
 package com.example.desktopproject.controller;
 
+import com.example.desktopproject.API.ApiCall;
 import com.example.desktopproject.component.ToggleCustomButton;
 import com.example.desktopproject.db.ExpenseDAO;
 import com.example.desktopproject.model.ChangeType;
 import com.example.desktopproject.model.Expense;
+import com.example.desktopproject.model.Monetary;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Dialog;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.TableView;
 import org.apache.log4j.Logger;
-import com.example.desktopproject.API.ApiCall;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -21,39 +21,28 @@ import java.util.Optional;
 
 public class ExpensesTabController {
     private static final Logger logger = Logger.getLogger(ExpensesTabController.class);
-
+    private final ObservableList<Expense> expenses = FXCollections.observableArrayList();
+    private final DecimalFormat formatter = new DecimalFormat("#,##0.00");
     @FXML
     private ToggleCustomButton toggleCustomButton;
-
     @FXML
     private TableView<Expense> tableView;
-
     @FXML
     private TableColumn<Expense, String> totalColumn;
-
     @FXML
     private TableColumn<Expense, String> housingColumn;
-
     @FXML
     private TableColumn<Expense, String> foodColumn;
-
     @FXML
     private TableColumn<Expense, String> goingOutColumn;
-
     @FXML
     private TableColumn<Expense, String> transportationColumn;
-
     @FXML
     private TableColumn<Expense, String> travelColumn;
-
     @FXML
     private TableColumn<Expense, String> taxColumn;
-
     @FXML
     private TableColumn<Expense, String> othersColumn;
-
-    private ObservableList<Expense> expenses = FXCollections.observableArrayList();
-    private DecimalFormat formatter = new DecimalFormat("#,##0.00");
     private double exchangeRate = 1.0; // Taux de change EUR -> USD
 
     @FXML
@@ -66,9 +55,6 @@ public class ExpensesTabController {
             exchangeRate = rates.getRate("EUR"); // ou la méthode appropriée pour récupérer le taux USD
         }
 
-        // Configuration des colonnes monétaires
-        setupCurrencyColumns();
-
         List<Expense> dbExpenses = ExpenseDAO.fetchAllDataFromDB();
         expenses.addAll(dbExpenses);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -78,50 +64,7 @@ public class ExpensesTabController {
 
         toggleCustomButton.setLeftValue("€");
         toggleCustomButton.setRightValue("$");
-        toggleCustomButton.setOnAction(event -> convertCurrency());
-    }
-
-    private void setupCurrencyColumns() {
-        // Toutes les colonnes monétaires
-        totalColumn.setCellValueFactory(cellData -> {
-            Expense expense = cellData.getValue();
-            return new SimpleStringProperty(formatter.format(expense.getTotal()) + " €");
-        });
-
-        housingColumn.setCellValueFactory(cellData -> {
-            Expense expense = cellData.getValue();
-            return new SimpleStringProperty(formatter.format(expense.getHousing()) + " €");
-        });
-
-        foodColumn.setCellValueFactory(cellData -> {
-            Expense expense = cellData.getValue();
-            return new SimpleStringProperty(formatter.format(expense.getFood()) + " €");
-        });
-
-        goingOutColumn.setCellValueFactory(cellData -> {
-            Expense expense = cellData.getValue();
-            return new SimpleStringProperty(formatter.format(expense.getGoingOut()) + " €");
-        });
-
-        transportationColumn.setCellValueFactory(cellData -> {
-            Expense expense = cellData.getValue();
-            return new SimpleStringProperty(formatter.format(expense.getTransportation()) + " €");
-        });
-
-        travelColumn.setCellValueFactory(cellData -> {
-            Expense expense = cellData.getValue();
-            return new SimpleStringProperty(formatter.format(expense.getTravel()) + " €");
-        });
-
-        taxColumn.setCellValueFactory(cellData -> {
-            Expense expense = cellData.getValue();
-            return new SimpleStringProperty(formatter.format(expense.getTax()) + " €");
-        });
-
-        othersColumn.setCellValueFactory(cellData -> {
-            Expense expense = cellData.getValue();
-            return new SimpleStringProperty(formatter.format(expense.getOthers()) + " €");
-        });
+        toggleCustomButton.setOnAction(this::combinedAction);
     }
 
     @FXML
@@ -142,105 +85,13 @@ public class ExpensesTabController {
 
     @FXML
     public void combinedAction(ActionEvent event) {
-        convertCurrency();
-    }
-
-    private void convertCurrency() {
-        if (toggleCustomButton.getLabel().equals("$")) {
-            logger.info("Conversion des dépenses en dollars");
-            // Conversion vers dollars pour toutes les colonnes
-            totalColumn.setCellValueFactory(cellData -> {
-                Expense expense = cellData.getValue();
-                double converted = expense.getTotal() * exchangeRate;
-                return new SimpleStringProperty(formatter.format(converted) + " $");
-            });
-
-            housingColumn.setCellValueFactory(cellData -> {
-                Expense expense = cellData.getValue();
-                double converted = expense.getHousing() * exchangeRate;
-                return new SimpleStringProperty(formatter.format(converted) + " $");
-            });
-
-            foodColumn.setCellValueFactory(cellData -> {
-                Expense expense = cellData.getValue();
-                double converted = expense.getFood() * exchangeRate;
-                return new SimpleStringProperty(formatter.format(converted) + " $");
-            });
-
-            goingOutColumn.setCellValueFactory(cellData -> {
-                Expense expense = cellData.getValue();
-                double converted = expense.getGoingOut() * exchangeRate;
-                return new SimpleStringProperty(formatter.format(converted) + " $");
-            });
-
-            transportationColumn.setCellValueFactory(cellData -> {
-                Expense expense = cellData.getValue();
-                double converted = expense.getTransportation() * exchangeRate;
-                return new SimpleStringProperty(formatter.format(converted) + " $");
-            });
-
-            travelColumn.setCellValueFactory(cellData -> {
-                Expense expense = cellData.getValue();
-                double converted = expense.getTravel() * exchangeRate;
-                return new SimpleStringProperty(formatter.format(converted) + " $");
-            });
-
-            taxColumn.setCellValueFactory(cellData -> {
-                Expense expense = cellData.getValue();
-                double converted = expense.getTax() * exchangeRate;
-                return new SimpleStringProperty(formatter.format(converted) + " $");
-            });
-
-            othersColumn.setCellValueFactory(cellData -> {
-                Expense expense = cellData.getValue();
-                double converted = expense.getOthers() * exchangeRate;
-                return new SimpleStringProperty(formatter.format(converted) + " $");
-            });
+        if (toggleCustomButton.getSelectedLabel().equals("$")) {
+            Monetary.rate = (float) exchangeRate;
         } else {
-            logger.info("Affichage des dépenses en euros");
-            // Retour aux euros (valeurs originales)
-            totalColumn.setCellValueFactory(cellData -> {
-                Expense expense = cellData.getValue();
-                return new SimpleStringProperty(formatter.format(expense.getTotal()) + " €");
-            });
-
-            housingColumn.setCellValueFactory(cellData -> {
-                Expense expense = cellData.getValue();
-                return new SimpleStringProperty(formatter.format(expense.getHousing()) + " €");
-            });
-
-            foodColumn.setCellValueFactory(cellData -> {
-                Expense expense = cellData.getValue();
-                return new SimpleStringProperty(formatter.format(expense.getFood()) + " €");
-            });
-
-            goingOutColumn.setCellValueFactory(cellData -> {
-                Expense expense = cellData.getValue();
-                return new SimpleStringProperty(formatter.format(expense.getGoingOut()) + " €");
-            });
-
-            transportationColumn.setCellValueFactory(cellData -> {
-                Expense expense = cellData.getValue();
-                return new SimpleStringProperty(formatter.format(expense.getTransportation()) + " €");
-            });
-
-            travelColumn.setCellValueFactory(cellData -> {
-                Expense expense = cellData.getValue();
-                return new SimpleStringProperty(formatter.format(expense.getTravel()) + " €");
-            });
-
-            taxColumn.setCellValueFactory(cellData -> {
-                Expense expense = cellData.getValue();
-                return new SimpleStringProperty(formatter.format(expense.getTax()) + " €");
-            });
-
-            othersColumn.setCellValueFactory(cellData -> {
-                Expense expense = cellData.getValue();
-                return new SimpleStringProperty(formatter.format(expense.getOthers()) + " €");
-            });
+            Monetary.rate = 1f;
         }
 
-        // Rafraîchir le tableau
+        Monetary.unit = toggleCustomButton.getSelectedLabel();
         tableView.refresh();
     }
 }

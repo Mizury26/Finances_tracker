@@ -25,7 +25,7 @@
             onAction="#changeScreen" userData="dashboard" maxWidth="Infinity">
         <graphic>
             <HBox spacing="10" alignment="CENTER_LEFT">
-                <Text text="⬛" styleClass="nav-icon"/>
+                <Text text="📊" styleClass="nav-icon"/>
                 <Text text="Tableau de bord"/>
             </HBox>
         </graphic>
@@ -46,7 +46,7 @@
         <graphic>
             <HBox spacing="10" alignment="CENTER_LEFT">
                 <Text text="€" styleClass="nav-icon"/>
-                <Text text="Revenue"/>
+                <Text text="Revenus"/>
             </HBox>
         </graphic>
     </Button>

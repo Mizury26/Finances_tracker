@@ -7,7 +7,6 @@ import com.example.desktopproject.db.ExpenseDAO;
 import com.example.desktopproject.db.IncomeDAO;
 import com.example.desktopproject.model.Expense;
 import com.example.desktopproject.model.Income;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -82,16 +81,16 @@ public class DashboardController {
     }
 
     private void loadExpenses() {
-    currentMonthExpenses = ExpenseDAO.getByMonth(currentMonth, currentYear);
-    last12MonthExpenses = ExpenseDAO.get12MonthsBefore(currentMonth, currentYear);
-    last12MonthIncomes = IncomeDAO.get12MonthsBefore(currentMonth, currentYear);
-    System.out.println("Chargement des dépenses du mois " + currentMonth + " de l'année " + currentYear);
-    System.out.println(last12MonthExpenses);
+        currentMonthExpenses = ExpenseDAO.getByMonth(currentMonth, currentYear);
+        last12MonthExpenses = ExpenseDAO.get12MonthsBefore(currentMonth, currentYear);
+        last12MonthIncomes = IncomeDAO.get12MonthsBefore(currentMonth, currentYear);
+        System.out.println("Chargement des dépenses du mois " + currentMonth + " de l'année " + currentYear);
+        System.out.println(last12MonthExpenses);
 
-    logger.debug("Chargement de " + currentMonthExpenses.size() + " dépenses du mois et " + 
-                 last12MonthExpenses.size() + " dépenses des 12 derniers mois");
-    logger.debug("Chargement de " + last12MonthIncomes.size() + " revenus des 12 derniers mois");
-}
+        logger.debug("Chargement de " + currentMonthExpenses.size() + " dépenses du mois et " +
+                last12MonthExpenses.size() + " dépenses des 12 derniers mois");
+        logger.debug("Chargement de " + last12MonthIncomes.size() + " revenus des 12 derniers mois");
+    }
 
     private void setupMonthSelector() {
         if (monthSelector != null) {
@@ -144,23 +143,24 @@ public class DashboardController {
             String monthName = selectedMonth.getDisplayName(TextStyle.FULL, Locale.FRANCE);
             pieChart.setTitle("Répartition des dépenses - " + monthName);
             barChart.setTitle("Dépenses vs revenus - " + monthName);
-            
-        if (hasData) {
-            pieChart.createChart(currentMonthExpenses);
-            lineChart.createChart(last12MonthExpenses, yearMonth);
-            
-            // Mise à jour du graphique à barres
-            if (!last12MonthIncomes.isEmpty()) {
-                barChart.createChart(last12MonthExpenses, last12MonthIncomes, selectedMonth);
+            lineChart.setTitle("Evolution des dépenses - " + monthName);
+
+            if (hasData) {
+                pieChart.createChart(currentMonthExpenses);
+                lineChart.createChart(last12MonthExpenses, yearMonth);
+
+                // Mise à jour du graphique à barres
+                if (!last12MonthIncomes.isEmpty()) {
+                    barChart.createChart(last12MonthExpenses, last12MonthIncomes, selectedMonth);
+                } else {
+                    barChart.clear();
+                }
             } else {
+                // Effacer les graphiques précédents si nécessaire
+                pieChart.clear();
+                lineChart.clear();
                 barChart.clear();
             }
-        } else {
-            // Effacer les graphiques précédents si nécessaire
-            pieChart.clear();
-            lineChart.clear();
-            barChart.clear();
-        }
         }
     }
 

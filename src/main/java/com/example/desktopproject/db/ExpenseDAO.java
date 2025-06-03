@@ -84,8 +84,8 @@ public class ExpenseDAO {
         // Crée la date du premier jour 11 mois avant
         LocalDate startDate = endDate.minusMonths(11).withDayOfMonth(1);
 
-        // Formater les dates en chaînes (dd/MM/yyyy)
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        // Formater les dates en chaînes (yyyy-MM-dd)
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String startDateStr = startDate.format(formatter);
         String endDateStr = endDate.format(formatter);
 

@@ -29,6 +29,9 @@
         <!-- Graphique linéaire à droite -->
         <StackPane visible="true" fx:id="lineChartContainer" styleClass="chart-pane" GridPane.columnIndex="1"/>
 
+        <!-- Graphique baton -->
+        <StackPane visible="true" fx:id="barChartContainer" styleClass="chart-pane"
+                   GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="2"/>
         <!-- Label unique centré sur les deux colonnes -->
         <Label text="Aucunes données disponibles"
                visible="false" fx:id="noDataLabel" styleClass="no-data-label"

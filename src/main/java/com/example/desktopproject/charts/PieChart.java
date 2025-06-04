@@ -100,7 +100,7 @@ public class PieChart {
 
         // Appliquer un style CSS personnalisé pour la couleur du titre
         pieChart.lookupAll(".chart-title").forEach(node -> {
-            node.setStyle("-fx-text-fill: black; -fx-font-weight: 500; -fx-font-size: 12px; -fx-padding: 5 10 0 0; -fx-text-alignment: right; -fx-alignment: top-right");
+            node.setStyle("-fx-text-fill: black; -fx-font-weight: 700; -fx-font-size: 12px; -fx-padding: 5 10 0 0; -fx-text-alignment: right; -fx-alignment: top-right");
         });
 
         this.pieChart.setTitle(title);

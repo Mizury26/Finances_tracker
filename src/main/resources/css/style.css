@@ -25,13 +25,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);
 }
 
-.chart-title {
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #034f84;
-    -fx-padding: 0 0 10 0;
-}
-
 .chart-pane {
     -fx-background-color: white;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 10, 0, 0, 4);
@@ -93,32 +86,90 @@
 }
 
 .data0.chart-pie {
-    -fx-pie-color: #3498db;
+    -fx-pie-color: #2a9d90;
 }
 
 .data1.chart-pie {
-    -fx-pie-color: #2ecc71;
+    -fx-pie-color: #09e1c5;
 }
 
 .data2.chart-pie {
-    -fx-pie-color: #e74c3c;
+    -fx-pie-color: #c0c0c0;
 }
 
 .data3.chart-pie {
-    -fx-pie-color: #f1c40f;
+    -fx-pie-color: #a2b6b6;
 }
 
 .data4.chart-pie {
-    -fx-pie-color: #9b59b6;
+    -fx-pie-color: #2bccb5;
 }
 
 .data5.chart-pie {
-    -fx-pie-color: #e67e22;
+    -fx-pie-color: #53837c;
 }
 
 .data6.chart-pie {
-    -fx-pie-color: #34495e;
+    -fx-pie-color: #097e70;
 }
+
+.chart-series-line.series0 {
+    -fx-stroke: #2a9d90;
+}
+
+.chart-series-line.series1 {
+    -fx-stroke: #09e1c5;
+}
+
+.chart-series-line.series2 {
+    -fx-stroke: #c0c0c0;
+}
+
+.chart-series-line.series3 {
+    -fx-stroke: #a2b6b6;
+}
+
+.chart-series-line.series4 {
+    -fx-stroke: #2bccb5;
+}
+
+.chart-series-line.series5 {
+    -fx-stroke: #53837c;
+}
+
+.chart-series-line.series6 {
+    -fx-stroke: #097e70;
+}
+
+/* Couleurs pour les symboles des points de données */
+.chart-line-symbol.series0 {
+    -fx-background-color: #2a9d90, white;
+}
+
+.chart-line-symbol.series1 {
+    -fx-background-color: #09e1c5, white;
+}
+
+.chart-line-symbol.series2 {
+    -fx-background-color: #c0c0c0, white;
+}
+
+.chart-line-symbol.series3 {
+    -fx-background-color: #a2b6b6, white;
+}
+
+.chart-line-symbol.series4 {
+    -fx-background-color: #2bccb5, white;
+}
+
+.chart-line-symbol.series5 {
+    -fx-background-color: #53837c, white;
+}
+
+.chart-line-symbol.series6 {
+    -fx-background-color: #097e70, white;
+}
+
 
 /* Styles pour LineChart */
 .chart-series-line {

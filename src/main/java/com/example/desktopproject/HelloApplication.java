@@ -2,7 +2,6 @@ package com.example.desktopproject;
 
 import com.example.desktopproject.db.Database;
 import com.example.desktopproject.utils.LogConfig;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -56,7 +55,7 @@ public class HelloApplication extends Application {
         try {
             getLogger().debug("Chargement du fichier FXML: main-layout.fxml");
             FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("main-layout.fxml"));
-            Scene scene = new Scene(loader.load(), 1000, 600);
+            Scene scene = new Scene(loader.load(), 1200, 720);
 
             // Stocker une référence au contrôleur principal dans la scène
             scene.setUserData(loader.getController());

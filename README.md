@@ -116,7 +116,7 @@ separation of responsibilities:
 3. Compile the project with Gradle: `gradle build --scan`
 4. Run the application: `java -jar target/finances-tracker-1.0-SNAPSHOT.jar`
 
-***We recommande you to use [IntelliJ IDEA](https://www.jetbrains.com/fr-fr/idea/#)***
+***We recommend you to use [IntelliJ IDEA](https://www.jetbrains.com/fr-fr/idea/#)***
 
 ### 💻 Development :
 

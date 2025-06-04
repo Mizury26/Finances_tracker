@@ -16,7 +16,7 @@ public class MainLayoutController {
     private StackPane contentArea;
 
     public void initialize() {
-        loadView("expenses-tab-view.fxml");
+        loadView("dashboard-view.fxml");
     }
 
     public void loadView(String fxmlFile) {

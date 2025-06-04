@@ -31,6 +31,9 @@ Finances Tracker is a desktop application developed to help users track their pe
 
 The application stores all your data locally, ensuring your privacy while offering advanced analysis features.
 
+![Finances Tracker Dashboard](./img/dashboard.png)
+![Finances Tracker Tab](./img/tab.png)
+
 ### ⚙️ Technologies used :
 
 <img alt="Java badge" src="https://img.shields.io/badge/Language-Java-blue">
@@ -92,7 +95,7 @@ The application is built according to an MVC (Model-View-Controller) architectur
 #### Prerequisites
 - **OS**: Windows 10/11, macOS, or Linux
 - **Java**: Version 21 or higher
-- **Disk Space**: Approximately 100MB
+- **Disk Space**: Approximately 125Mo
 
 #### Method 1: Installation via the installer
 1. Download the latest version of the installer from the GitHub Actions page

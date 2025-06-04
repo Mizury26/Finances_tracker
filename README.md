@@ -1,7 +1,6 @@
 # <img src="./src/main/resources/images/logoDesktop.png" width="40" style="vertical-align: middle"/> Finances Tracker
 
-Project by [__ARCAS__ Manon](https://github.com/Manon-Arc) and [__MACE
-__ Léo](https://github.com/LeoMa33).
+Project by [__ARCAS__ Manon](https://github.com/Manon-Arc) and [__MACE__ Léo](https://github.com/LeoMa33).
 
 Welcome to the Finances tracker project ! <br>
 
@@ -136,7 +135,6 @@ The class being tested is `ChangeType`, which checks that the currency conversio
 correctly.
 
 ___
-Developed with ❤️ by  [__ARCAS__ Manon](https://github.com/Manon-Arc) and [__MACE
-__ Léo](https://github.com/LeoMa33).
+Developed with ❤️ by  [__ARCAS__ Manon](https://github.com/Manon-Arc) and [__MACE__ Léo](https://github.com/LeoMa33).
 
 

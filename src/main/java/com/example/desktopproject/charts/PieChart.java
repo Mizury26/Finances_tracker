@@ -3,6 +3,7 @@ package com.example.desktopproject.charts;
 import com.example.desktopproject.model.Expense;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
 import org.apache.log4j.Logger;
@@ -95,6 +96,13 @@ public class PieChart {
 
     // Méthode pour mettre à jour le titre
     public void setTitle(String title) {
+        pieChart.setTitleSide(Side.TOP);
+
+        // Appliquer un style CSS personnalisé pour la couleur du titre
+        pieChart.lookupAll(".chart-title").forEach(node -> {
+            node.setStyle("-fx-text-fill: black; -fx-font-weight: 500; -fx-font-size: 12px; -fx-padding: 5 10 0 0; -fx-text-alignment: right; -fx-alignment: top-right");
+        });
+
         this.pieChart.setTitle(title);
     }
 }

@@ -6,6 +6,10 @@
     -fx-background-color: transparent;
 }
 
+.nav-title {
+    -fx-text-fill: white;
+}
+
 .nav-button.active {
     -fx-background-color: #2a9e93;
 }

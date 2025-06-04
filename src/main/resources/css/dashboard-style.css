@@ -1,0 +1,14 @@
+#welcomeMessage {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+#currentDate {
+    -fx-text-fill: #909193;
+}
+
+.subtitle {
+    -fx-text-fill: #909193;
+    -fx-font-weight: 600;
+    -fx-font-size: 18px;
+}

@@ -14,10 +14,12 @@ import javafx.scene.layout.StackPane;
 import javafx.util.StringConverter;
 import org.apache.log4j.Logger;
 
+import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.YearMonth;
 import java.time.format.TextStyle;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -39,6 +41,12 @@ public class DashboardController {
     @FXML
     private Label noDataLabel;
 
+    @FXML
+    private Label welcomeMessage;
+
+    @FXML
+    private Label currentDate;
+
     private List<Expense> currentMonthExpenses;
     private List<Expense> last12MonthExpenses;
     private List<Income> last12MonthIncomes;
@@ -52,6 +60,13 @@ public class DashboardController {
 
     @FXML
     public void initialize() {
+        String userName = System.getProperty("user.name");
+        welcomeMessage.setText("Bienvenue " + userName + " !");
+        Locale locale = new Locale("fr", "FR");
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, locale);
+        String date = dateFormat.format(new Date());
+        currentDate.setText(date);
+
         logger.debug("Initialisation du dashboard");
 
         LocalDate now = LocalDate.now();
@@ -98,7 +113,10 @@ public class DashboardController {
             monthSelector.setConverter(new StringConverter<Month>() {
                 @Override
                 public String toString(Month month) {
-                    return month.getDisplayName(TextStyle.FULL, Locale.FRANCE);
+                    String monthName = month.getDisplayName(TextStyle.FULL, Locale.FRANCE);
+                    monthName = monthName.substring(0, 1).toUpperCase() + monthName.substring(1);
+
+                    return monthName;
                 }
 
                 @Override
@@ -135,30 +153,26 @@ public class DashboardController {
             boolean hasData = !currentMonthExpenses.isEmpty();
             noDataLabel.setVisible(!hasData);
             pieChartContainer.setVisible(hasData);
-            lineChartContainer.setVisible(hasData);
-            barChartContainer.setVisible(hasData && !last12MonthIncomes.isEmpty()); // Vérification pour le barChart
 
 
-            // Mettre à jour le titre avec le nom en français
             String monthName = selectedMonth.getDisplayName(TextStyle.FULL, Locale.FRANCE);
-            pieChart.setTitle("Répartition des dépenses - " + monthName);
-            barChart.setTitle("Dépenses vs revenus - " + monthName);
-            lineChart.setTitle("Evolution des dépenses - " + monthName);
+            pieChart.setTitle(monthName + ", " + currentYear);
+            barChart.setTitle(monthName + ", " + currentYear);
+            lineChart.setTitle(monthName + ", " + currentYear);
 
             if (hasData) {
                 pieChart.createChart(currentMonthExpenses);
-                lineChart.createChart(last12MonthExpenses, yearMonth);
-
-                // Mise à jour du graphique à barres
-                if (!last12MonthIncomes.isEmpty()) {
-                    barChart.createChart(last12MonthExpenses, last12MonthIncomes, selectedMonth);
-                } else {
-                    barChart.clear();
-                }
             } else {
-                // Effacer les graphiques précédents si nécessaire
+                // Effacer le graphique précédents si nécessaire
                 pieChart.clear();
-                lineChart.clear();
+            }
+
+            lineChart.createChart(last12MonthExpenses, yearMonth);
+
+            // Mise à jour du graphique à barres
+            if (!last12MonthIncomes.isEmpty()) {
+                barChart.createChart(last12MonthExpenses, last12MonthIncomes, selectedMonth);
+            } else {
                 barChart.clear();
             }
         }

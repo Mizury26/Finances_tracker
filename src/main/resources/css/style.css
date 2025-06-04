@@ -3,7 +3,7 @@
     -fx-text-fill: #034f84;
 }
 
- /*Style du tableau */
+/*Style du tableau */
 .table-view {
     -fx-background-color: #f5f5f5;
     -fx-background-radius: 5;
@@ -50,7 +50,7 @@
     -fx-border-radius: 5;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-cursor:  hand;
+    -fx-cursor: hand;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.0, 0, 1);
 }
 
@@ -73,7 +73,7 @@
 .expense-grid {
     -fx-background-color: white;
     -fx-background-radius: 5;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);
 }
 
 .label-field {
@@ -143,6 +143,7 @@
 .dialog-pane .button-bar .button:cancel:hover {
     -fx-background-color: #c0392b;
 }
+
 /* Styles pour le dashboard */
 .chart-container {
     -fx-background-color: white;
@@ -150,7 +151,7 @@
     -fx-border-color: #cccccc;
     -fx-border-radius: 5;
     -fx-padding: 10;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);
 }
 
 .chart-title {
@@ -162,6 +163,8 @@
 
 .chart-pane {
     -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 10, 0, 0, 4);
+
 }
 
 .stats-grid {
@@ -175,7 +178,7 @@
     -fx-border-color: #ececec;
     -fx-border-radius: 4;
     -fx-border-width: 1;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 3, 0, 0, 1);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 3, 0, 0, 1);
 }
 
 .stat-label {
@@ -218,18 +221,43 @@
     -fx-font-weight: bold;
 }
 
-.data0.chart-pie { -fx-pie-color: #3498db; }
-.data1.chart-pie { -fx-pie-color: #2ecc71; }
-.data2.chart-pie { -fx-pie-color: #e74c3c; }
-.data3.chart-pie { -fx-pie-color: #f1c40f; }
-.data4.chart-pie { -fx-pie-color: #9b59b6; }
-.data5.chart-pie { -fx-pie-color: #e67e22; }
-.data6.chart-pie { -fx-pie-color: #34495e; }
+.data0.chart-pie {
+    -fx-pie-color: #3498db;
+}
+
+.data1.chart-pie {
+    -fx-pie-color: #2ecc71;
+}
+
+.data2.chart-pie {
+    -fx-pie-color: #e74c3c;
+}
+
+.data3.chart-pie {
+    -fx-pie-color: #f1c40f;
+}
+
+.data4.chart-pie {
+    -fx-pie-color: #9b59b6;
+}
+
+.data5.chart-pie {
+    -fx-pie-color: #e67e22;
+}
+
+.data6.chart-pie {
+    -fx-pie-color: #34495e;
+}
 
 /* Styles pour LineChart */
 .chart-series-line {
     -fx-stroke-width: 2px;
 }
 
-.default-color0.chart-series-line { -fx-stroke: #3498db; }
-.default-color0.chart-line-symbol { -fx-background-color: #3498db, white; }
+.default-color0.chart-series-line {
+    -fx-stroke: #3498db;
+}
+
+.default-color0.chart-line-symbol {
+    -fx-background-color: #3498db, white;
+}

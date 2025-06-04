@@ -1,0 +1,72 @@
+/* ------------------ TITRE ------------------ */
+.title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+/* ------------------ TABLEVIEW GÉNÉRAL ------------------ */
+.table-view {
+    -fx-background-color: #f5f5f5;
+    -fx-background-radius: 5;
+    -fx-border-color: transparent;
+    -fx-border-radius: 5;
+    -fx-padding: 5;
+}
+
+/* ------------------ EN-TÊTES DE COLONNE ------------------ */
+.table-view .column-header-background {
+    -fx-background-color: #2a9e93;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.table-view .column-header,
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 8;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+}
+
+/* Supprimer les lignes/bordures entre les headers */
+.table-view .table-column {
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+}
+
+/* ------------------ CELLULES ------------------ */
+.table-view .table-cell {
+    -fx-padding: 5;
+    -fx-alignment: CENTER;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+}
+
+/* ------------------ LIGNES ALTERNÉES ------------------ */
+.table-row-cell:odd {
+    -fx-background-color: #f8f8f8;
+}
+
+.table-row-cell:even {
+    -fx-background-color: #ffffff;
+}
+
+/* ------------------ LIGNE SÉLECTIONNÉE ------------------ */
+.table-row-cell:selected {
+    -fx-background-color: rgba(112, 231, 219, 0.59);
+    -fx-text-fill: black;
+}
+
+.table-view .table-row-cell:selected .table-cell {
+    -fx-text-fill: black;
+}
+
+/* ------------------ SURVOL ------------------ */
+.table-row-cell:hover {
+    -fx-background-color: rgba(224, 255, 252, 0.59);
+}
+
+
+

@@ -38,7 +38,7 @@ public class Expense extends Monetary {
     }
 
     public String getTotal() {
-        return (this.others + this.tax + this.transportation + this.goingOut + this.food + this.housing + this.travel) * Monetary.rate + Monetary.unit;
+        return (String.format("%.2f", (this.others + this.tax + this.transportation + this.goingOut + this.food + this.housing + this.travel) * Monetary.rate) + Monetary.unit);
     }
 
     public Float getStrictTotal() {
@@ -46,7 +46,7 @@ public class Expense extends Monetary {
     }
 
     public String getHousing() {
-        return housing * Monetary.rate + Monetary.unit;
+        return (String.format("%.2f", housing * Monetary.rate) + Monetary.unit);
     }
 
     public void setHousing(Float housing) {
@@ -58,7 +58,7 @@ public class Expense extends Monetary {
     }
 
     public String getFood() {
-        return food * Monetary.rate + Monetary.unit;
+        return (String.format("%.2f", food * Monetary.rate) + Monetary.unit);
     }
 
     public void setFood(Float food) {
@@ -70,7 +70,7 @@ public class Expense extends Monetary {
     }
 
     public String getGoingOut() {
-        return goingOut * Monetary.rate + Monetary.unit;
+        return (String.format("%.2f", goingOut * Monetary.rate) + Monetary.unit);
     }
 
     public void setGoingOut(Float goingOut) {
@@ -82,7 +82,7 @@ public class Expense extends Monetary {
     }
 
     public String getTransportation() {
-        return transportation * Monetary.rate + Monetary.unit;
+        return (String.format("%.2f", transportation * Monetary.rate) + Monetary.unit);
     }
 
     public void setTransportation(Float transportation) {
@@ -94,7 +94,7 @@ public class Expense extends Monetary {
     }
 
     public String getTravel() {
-        return travel * Monetary.rate + Monetary.unit;
+        return (String.format("%.2f", travel * Monetary.rate) + Monetary.unit);
     }
 
     public void setTravel(Float travel) {
@@ -106,7 +106,7 @@ public class Expense extends Monetary {
     }
 
     public String getTax() {
-        return tax * Monetary.rate + Monetary.unit;
+        return (String.format("%.2f", tax * Monetary.rate) + Monetary.unit);
     }
 
     public void setTax(Float tax) {
@@ -118,7 +118,7 @@ public class Expense extends Monetary {
     }
 
     public String getOthers() {
-        return others * Monetary.rate + Monetary.unit;
+        return (String.format("%.2f", others * Monetary.rate) + Monetary.unit);
     }
 
     public void setOthers(Float others) {

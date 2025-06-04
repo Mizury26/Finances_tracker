@@ -24,7 +24,7 @@ public class Income extends Monetary {
     }
 
     public String getTotal() {
-        return (this.salary + this.helper + this.selfEnterprise + this.passiveIncome + this.other) * Monetary.rate + Monetary.unit;
+        return (String.format("%.2f", (this.salary + this.helper + this.selfEnterprise + this.passiveIncome + this.other) * Monetary.rate) + Monetary.unit);
     }
 
     public Float getStrictTotal() {
@@ -40,7 +40,7 @@ public class Income extends Monetary {
     }
 
     public String getSalary() {
-        return salary * Monetary.rate + Monetary.unit;
+        return (String.format("%.2f", salary * Monetary.rate) + Monetary.unit);
     }
 
     public void setSalary(Float salary) {
@@ -52,7 +52,7 @@ public class Income extends Monetary {
     }
 
     public String getHelper() {
-        return helper * Monetary.rate + Monetary.unit;
+        return (String.format("%.2f", helper * Monetary.rate) + Monetary.unit);
     }
 
     public void setHelper(Float helper) {
@@ -64,7 +64,7 @@ public class Income extends Monetary {
     }
 
     public String getSelfEnterprise() {
-        return selfEnterprise * Monetary.rate + Monetary.unit;
+        return (String.format("%.2f", selfEnterprise * Monetary.rate) + Monetary.unit);
     }
 
     public void setSelfEnterprise(Float selfEnterprise) {
@@ -76,7 +76,7 @@ public class Income extends Monetary {
     }
 
     public String getPassiveIncome() {
-        return passiveIncome * Monetary.rate + Monetary.unit;
+        return (String.format("%.2f", passiveIncome * Monetary.rate) + Monetary.unit);
     }
 
     public void setPassiveIncome(Float passiveIncome) {
@@ -88,7 +88,7 @@ public class Income extends Monetary {
     }
 
     public String getOther() {
-        return other * Monetary.rate + Monetary.unit;
+        return (String.format("%.2f", other * Monetary.rate) + Monetary.unit);
     }
 
     public void setOther(Float others) {

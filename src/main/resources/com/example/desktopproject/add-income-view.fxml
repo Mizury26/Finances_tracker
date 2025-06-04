@@ -6,13 +6,13 @@
 
 <DialogPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
-          stylesheets="@../../../css/style.css"
+          stylesheets="@../../../css/dialog-style.css"
           prefWidth="400">
 
     <headerText>Ajouter de nouveaux revenus </headerText>
     
     <content>
-        <GridPane hgap="10" vgap="10" styleClass="income-grid">
+        <GridPane hgap="10" vgap="10" styleClass="grid">
             <padding>
                 <Insets top="20" right="20" bottom="20" left="20"/>
             </padding>

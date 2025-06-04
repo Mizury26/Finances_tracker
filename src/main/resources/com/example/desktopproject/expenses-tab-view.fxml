@@ -9,65 +9,78 @@
 <?import javafx.scene.control.Label?>
 <?import com.example.desktopproject.component.ToggleCustomButton?>
 
-<VBox stylesheets="@../../../css/style.css" alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+<?import javafx.scene.layout.HBox?>
+<VBox stylesheets="@../../../css/tab-style.css" alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.desktopproject.controller.ExpensesTabController"
       prefHeight="600.0" prefWidth="900.0">
 
-    <padding>
-        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
-    </padding>
+    <HBox spacing="10.0" alignment="CENTER_LEFT" style="-fx-border-width: 0 0 1 0; -fx-border-color: rgba(144,145,147,0.25);"
 
-    <Label styleClass="title" text="Tableau récapitulatif des dépenses"/>
-    <ToggleCustomButton fx:id="toggleCustomButton" onAction="#combinedAction"/>
+    >
+        <padding>
+            <Insets top="15.0" right="20.0" bottom="15.0" left="20.0"/>
+        </padding>
+        <Label styleClass="title" text="Tableau récapitulatif des dépenses"/>
+        <HBox HBox.hgrow="ALWAYS"/>
+        <ToggleCustomButton fx:id="toggleCustomButton" onAction="#combinedAction"/>
+    </HBox>
 
     <TableView fx:id="tableView" VBox.vgrow="ALWAYS" styleClass="table-view">
+        <VBox.margin>
+            <Insets top="10" right="20" bottom="10" left="20"/>
+        </VBox.margin>
         <columns>
-            <TableColumn editable="false" text="Période" prefWidth="100" styleClass="table-column">
+            <TableColumn editable="false" text="Période" prefWidth="100" >
                 <cellValueFactory>
                     <PropertyValueFactory property="date"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="totalColumn" editable="false" text="Total" prefWidth="80" styleClass="table-column">
+            <TableColumn fx:id="totalColumn" editable="false" text="Total" prefWidth="80" >
                 <cellValueFactory>
                     <PropertyValueFactory property="total"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="housingColumn" editable="false" text="Logement" prefWidth="80" styleClass="table-column">
+            <TableColumn fx:id="housingColumn" editable="false" text="Logement" prefWidth="80" >
                 <cellValueFactory>
                     <PropertyValueFactory property="housing"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="foodColumn" editable="false" text="Nourriture" prefWidth="80" styleClass="table-column">
+            <TableColumn fx:id="foodColumn" editable="false" text="Nourriture" prefWidth="80" >
                 <cellValueFactory>
                     <PropertyValueFactory property="food"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="goingOutColumn" editable="false" text="Sortie" prefWidth="80" styleClass="table-column">
+            <TableColumn fx:id="goingOutColumn" editable="false" text="Sortie" prefWidth="80" >
                 <cellValueFactory>
                     <PropertyValueFactory property="goingOut"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="transportationColumn" editable="false" text="Voiture/Transport" prefWidth="120" styleClass="table-column">
+            <TableColumn fx:id="transportationColumn" editable="false" text="Voiture/Transport" prefWidth="120" >
                 <cellValueFactory>
                     <PropertyValueFactory property="transportation"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="travelColumn" editable="false" text="Voyage" prefWidth="80" styleClass="table-column">
+            <TableColumn fx:id="travelColumn" editable="false" text="Voyage" prefWidth="80" >
                 <cellValueFactory>
                     <PropertyValueFactory property="travel"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="taxColumn" editable="false" text="Impôts" prefWidth="80" styleClass="table-column">
+            <TableColumn fx:id="taxColumn" editable="false" text="Impôts" prefWidth="80" >
                 <cellValueFactory>
                     <PropertyValueFactory property="tax"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="othersColumn" editable="false" text="Autres" prefWidth="80" styleClass="table-column">
+            <TableColumn fx:id="othersColumn" editable="false" text="Autres" prefWidth="80" >
                 <cellValueFactory>
                     <PropertyValueFactory property="others"/>
                 </cellValueFactory>
             </TableColumn>
         </columns>
     </TableView>
-    <Button text="Ajouter" onAction="#addExpense" styleClass="button"/>
+    <VBox alignment="CENTER_RIGHT">
+        <Button text="+ Ajouter" onAction="#addExpense" styleClass="button"/>
+        <VBox.margin>
+        <Insets top="0" right="20" bottom="20" left="20"/>
+    </VBox.margin>
+    </VBox>
 </VBox>

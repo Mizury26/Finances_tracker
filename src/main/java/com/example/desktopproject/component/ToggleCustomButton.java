@@ -24,6 +24,10 @@ public class ToggleCustomButton extends HBox {
     private final Label leftLabel = new Label();
     private final Label rightLabel = new Label();
 
+    // Couleurs pour les deux états
+    private Color leftStateColor = Color.web("#2a9e93");  // Couleur pour l'état gauche
+    private Color rightStateColor = Color.web("#1c6b63");  // Couleur pour l'état droit
+
     private final BooleanProperty selected = new SimpleBooleanProperty(false);
     private final StringProperty leftValue = new SimpleStringProperty("€");
     private final StringProperty rightValue = new SimpleStringProperty("$");
@@ -41,15 +45,12 @@ public class ToggleCustomButton extends HBox {
 
         setAlignment(Pos.CENTER);
 
-        // Configuration du fond avec couleur bleue
+        // Configuration du fond avec couleur initiale
         background.setWidth(WIDTH);
         background.setHeight(HEIGHT);
         background.setArcWidth(HEIGHT);
         background.setArcHeight(HEIGHT);
-        background.setFill(Color.web("#3498db"));
-
-        // Option alternative: bleu clair
-        // background.setFill(Color.web("#86B5F5"));
+        background.setFill(leftStateColor);  // Couleur initiale
 
         // Configuration du curseur
         thumb.setPrefSize(THUMB_WIDTH, HEIGHT - 4);
@@ -61,7 +62,6 @@ public class ToggleCustomButton extends HBox {
         leftLabel.setTextFill(Color.WHITE);
         rightLabel.setTextFill(Color.WHITE);
 
-        // Augmentation de la taille des labels
         leftLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
         rightLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
 
@@ -69,7 +69,7 @@ public class ToggleCustomButton extends HBox {
         rightLabel.setTranslateX(WIDTH - 20);
 
         // Centrage vertical des labels
-        double labelY = HEIGHT / 2 - 9; // Ajustement pour centrer verticalement avec la nouvelle taille
+        double labelY = HEIGHT / 2 - 9;
         leftLabel.setTranslateY(labelY);
         rightLabel.setTranslateY(labelY);
 
@@ -88,14 +88,16 @@ public class ToggleCustomButton extends HBox {
         thumb.setOnMouseClicked(event -> toggle());
         background.setOnMouseClicked(event -> toggle());
 
-        // Mise à jour de la position lors du changement de sélection
+        // Mise à jour de la position et de la couleur lors du changement de sélection
         selected.addListener((obs, oldVal, newVal) -> {
             if (newVal) {
                 animateThumb(2);
                 selectedLabel.set(rightValue.get());
+                background.setFill(rightStateColor);  // Changement de couleur pour l'état droit
             } else {
                 animateThumb(WIDTH - THUMB_WIDTH - 2);
                 selectedLabel.set(leftValue.get());
+                background.setFill(leftStateColor);  // Changement de couleur pour l'état gauche
             }
 
             if (onAction.get() != null) {
@@ -109,6 +111,22 @@ public class ToggleCustomButton extends HBox {
         transition.setToX(newX);
         transition.play();
     }
+
+    // Méthodes pour personnaliser les couleurs des états
+    public void setLeftStateColor(Color color) {
+        this.leftStateColor = color;
+        if (!selected.get()) {
+            background.setFill(color);
+        }
+    }
+
+    public void setRightStateColor(Color color) {
+        this.rightStateColor = color;
+        if (selected.get()) {
+            background.setFill(color);
+        }
+    }
+
 
     private void updateLabels() {
         leftLabel.setText(leftValue.get());

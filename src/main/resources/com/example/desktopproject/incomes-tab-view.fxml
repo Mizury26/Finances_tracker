@@ -9,55 +9,67 @@
 <?import javafx.scene.control.Label?>
 <?import com.example.desktopproject.component.ToggleCustomButton?>
 
-<VBox stylesheets="@../../../css/style.css" alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+<?import javafx.scene.layout.HBox?>
+<VBox stylesheets="@../../../css/tab-style.css" alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.desktopproject.controller.IncomesTabController"
       prefHeight="600.0" prefWidth="900.0">
+    <HBox spacing="10.0" alignment="CENTER_LEFT" style="-fx-border-width: 0 0 1 0; -fx-border-color: rgba(144,145,147,0.25);"
 
-    <padding>
-        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
-    </padding>
-
-    <Label styleClass="title" text="Tableau récapitulatif des revenus"/>
-    <ToggleCustomButton fx:id="toggleCustomButton" onAction="#combinedAction"/>
+    >
+        <padding>
+            <Insets top="15.0" right="20.0" bottom="15.0" left="20.0"/>
+        </padding>
+        <Label styleClass="title" text="Tableau récapitulatif des revenus"/>
+        <HBox HBox.hgrow="ALWAYS"/>
+        <ToggleCustomButton fx:id="toggleCustomButton" onAction="#combinedAction"/>
+    </HBox>
 
     <TableView fx:id="tableView" VBox.vgrow="ALWAYS" styleClass="table-view">
+        <VBox.margin>
+            <Insets top="10" right="20" bottom="10" left="20"/>
+        </VBox.margin>
         <columns>
-            <TableColumn editable="false" text="Période" prefWidth="100" styleClass="table-column">
+            <TableColumn editable="false" text="Période" prefWidth="100" >
                 <cellValueFactory>
                     <PropertyValueFactory property="date"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="totalColumn" editable="false" text="Total" prefWidth="80" styleClass="table-column">
+            <TableColumn fx:id="totalColumn" editable="false" text="Total" prefWidth="80" >
                 <cellValueFactory>
                     <PropertyValueFactory property="total"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="salaryColumn" editable="false" text="Salaire" prefWidth="80" styleClass="table-column">
+            <TableColumn fx:id="salaryColumn" editable="false" text="Salaire" prefWidth="80" >
                 <cellValueFactory>
                     <PropertyValueFactory property="salary"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="helperColumn" editable="false" text="Aides" prefWidth="80" styleClass="table-column">
+            <TableColumn fx:id="helperColumn" editable="false" text="Aides" prefWidth="80" >
                 <cellValueFactory>
                     <PropertyValueFactory property="helper"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="selfEnterpriseColumn" editable="false" text="Auto-Entreprise" prefWidth="80" styleClass="table-column">
+            <TableColumn fx:id="selfEnterpriseColumn" editable="false" text="Auto-Entreprise" prefWidth="80" >
                 <cellValueFactory>
                     <PropertyValueFactory property="selfEnterprise"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="passiveIncomeColumn" editable="false" text="Renenus passifs" prefWidth="120" styleClass="table-column">
+            <TableColumn fx:id="passiveIncomeColumn" editable="false" text="Renenus passifs" prefWidth="120" >
                 <cellValueFactory>
                     <PropertyValueFactory property="passiveIncome"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="otherColumn" editable="false" text="Autres" prefWidth="80" styleClass="table-column">
+            <TableColumn fx:id="otherColumn" editable="false" text="Autres" prefWidth="80" >
                 <cellValueFactory>
                     <PropertyValueFactory property="other"/>
                 </cellValueFactory>
             </TableColumn>
         </columns>
     </TableView>
-    <Button text="Ajouter" onAction="#addIncomes" styleClass="button"/>
+    <VBox alignment="CENTER_RIGHT">
+        <Button text="+ Ajouter" onAction="#addIncomes" styleClass="button"/>
+        <VBox.margin>
+            <Insets top="0" right="20" bottom="20" left="20"/>
+        </VBox.margin>
+    </VBox>
 </VBox>

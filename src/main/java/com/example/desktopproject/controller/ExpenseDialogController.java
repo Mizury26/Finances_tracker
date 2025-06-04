@@ -13,10 +13,28 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.UnaryOperator;
 
 public class ExpenseDialogController extends Dialog<Expense> {
     private static final Logger logger = Logger.getLogger(ExpenseDialogController.class);
+    UnaryOperator<TextFormatter.Change> numberValidator = text -> {
+        if (text.isReplaced()) {
+            if (text.getText().matches("[^0-9]")) {
+                text.setText(text.getControlText().substring(text.getRangeStart(), text.getRangeEnd()));
+            }
+        }
 
+        if (text.isAdded()) {
+            if (text.getControlText().contains(".")) {
+                if (text.getText().matches("[0-9]")) {
+                    text.setText("");
+                }
+            } else if (text.getText().matches("[^0-9.^0-9]")) {
+                text.setText("");
+            }
+        }
+        return text;
+    };
     @FXML
     private DatePicker periodeField;
     @FXML
@@ -35,10 +53,10 @@ public class ExpenseDialogController extends Dialog<Expense> {
     private TextField autresField;
     @FXML
     private Label totalLabel;
-
     private List<TextField> moneyFields = new ArrayList<>();
 
     public ExpenseDialogController() {
+
         try {
             FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("add-expense-view.fxml"));
 
@@ -84,16 +102,15 @@ public class ExpenseDialogController extends Dialog<Expense> {
         moneyFields.add(impotField);
         moneyFields.add(autresField);
 
+        periodeField.setValue(LocalDate.now());
+
         // Ajouter des écouteurs pour chaque champ
         for (TextField field : moneyFields) {
+            field.setTextFormatter(new TextFormatter<>(numberValidator));
+            field.setText("0");
             field.textProperty().addListener((observable, oldValue, newValue) -> {
                 updateTotal();
             });
-        }
-
-        // Initialiser les champs avec "0"
-        for (TextField field : moneyFields) {
-            field.setText("0");
         }
 
         // Calculer le total initial
@@ -131,7 +148,7 @@ public class ExpenseDialogController extends Dialog<Expense> {
         // Vérifier tous les champs monétaires
         for (TextField field : moneyFields) {
             try {
-                float value = Float.parseFloat(field.getText());
+                float value = Float.parseFloat(field.getText().isEmpty() ? "0" : field.getText());
                 if (value < 0) {
                     errorMessage.append("Les montants ne peuvent pas être négatifs!\n");
                     break;

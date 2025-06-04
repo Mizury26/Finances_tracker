@@ -32,8 +32,12 @@ overview of your financial situation.
 The application stores all your data locally, ensuring your privacy while offering advanced analysis
 features.
 
-![Finances Tracker Dashboard](./img/dashboard.png)
-![Finances Tracker Tab](./img/tab.png)
+#### View
+
+<div style="display: flex; flex-direction: row; gap: 10px">
+    <img src="./img/dashboard.png" width="400" alt="Dashboard view"/>
+    <img src="./img/tab.png" width="400" alt="Tab view"/>
+</div>
 
 ### ⚙️ Technologies used :
 

@@ -1,7 +1,7 @@
 package com.example.desktopproject.controller;
 
 import com.example.desktopproject.HelloApplication;
-import com.example.desktopproject.model.Expense;
+import com.example.desktopproject.model.Income;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -13,51 +13,65 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.UnaryOperator;
 
-public class DialogController extends Dialog<Expense> {
-    private static final Logger logger = Logger.getLogger(DialogController.class);
+public class IncomeDialogController extends Dialog<Income> {
+    private static final Logger logger = Logger.getLogger(IncomeDialogController.class);
+    UnaryOperator<TextFormatter.Change> numberValidator = text -> {
+        if (text.isReplaced()) {
+            if (text.getText().matches("[^0-9]")) {
+                text.setText(text.getControlText().substring(text.getRangeStart(), text.getRangeEnd()));
+            }
+        }
 
+        if (text.isAdded()) {
+            if (text.getControlText().contains(".")) {
+                if (text.getText().matches("[0-9]")) {
+                    text.setText("");
+                }
+            } else if (text.getText().matches("[^0-9.^0-9]")) {
+                text.setText("");
+            }
+        }
+        return text;
+    };
     @FXML
     private DatePicker periodeField;
     @FXML
-    private TextField logementField;
+    private TextField salaryField;
     @FXML
-    private TextField nourritureField;
+    private TextField helpersField;
     @FXML
-    private TextField sortieField;
+    private TextField selfEnterpriseField;
     @FXML
-    private TextField transportField;
+    private TextField passiveIncomeField;
     @FXML
-    private TextField voyageField;
-    @FXML
-    private TextField impotField;
-    @FXML
-    private TextField autresField;
+    private TextField othersField;
     @FXML
     private Label totalLabel;
 
     private List<TextField> moneyFields = new ArrayList<>();
 
-    public DialogController() {
+    public IncomeDialogController() {
         try {
-            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("add-expense-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("add-income-view.fxml"));
 
             loader.setController(this);
             DialogPane dialogPane = loader.load();
 
             setDialogPane(dialogPane);
-            setTitle("Ajouter une dépense");
+            setTitle("Ajouter un revenu");
             Stage stage = (Stage) dialogPane.getScene().getWindow();
             stage.getIcons().add(new Image(HelloApplication.class.getResourceAsStream("/images/logoDesktop.png")));
 
-            logger.debug("DialogController initialisé avec succès");
+            logger.debug("IncomeDialogController initialisé avec succès");
 
             setResultConverter(buttonType -> {
                 if (buttonType.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
-                    logger.info("Création d'une nouvelle dépense");
-                    return createExpense();
+                    logger.info("Création de nouveaux revenus");
+                    return createIncome();
                 }
-                logger.debug("Annulation de la création de dépense");
+                logger.debug("Annulation de la création de revenus");
                 return null; // Retourne null si Annuler est cliqué
             });
 
@@ -76,24 +90,21 @@ public class DialogController extends Dialog<Expense> {
     public void initialize() {
         // Initialiser la liste des champs monétaires
         moneyFields = new ArrayList<>();
-        moneyFields.add(logementField);
-        moneyFields.add(nourritureField);
-        moneyFields.add(sortieField);
-        moneyFields.add(transportField);
-        moneyFields.add(voyageField);
-        moneyFields.add(impotField);
-        moneyFields.add(autresField);
+        moneyFields.add(salaryField);
+        moneyFields.add(helpersField);
+        moneyFields.add(selfEnterpriseField);
+        moneyFields.add(passiveIncomeField);
+        moneyFields.add(othersField);
+
+        periodeField.setValue(LocalDate.now());
 
         // Ajouter des écouteurs pour chaque champ
         for (TextField field : moneyFields) {
+            field.setTextFormatter(new TextFormatter<>(numberValidator));
+            field.setText("0");
             field.textProperty().addListener((observable, oldValue, newValue) -> {
                 updateTotal();
             });
-        }
-
-        // Initialiser les champs avec "0"
-        for (TextField field : moneyFields) {
-            field.setText("0");
         }
 
         // Calculer le total initial
@@ -131,7 +142,7 @@ public class DialogController extends Dialog<Expense> {
         // Vérifier tous les champs monétaires
         for (TextField field : moneyFields) {
             try {
-                float value = Float.parseFloat(field.getText());
+                float value = Float.parseFloat(field.getText().isEmpty() ? "0" : field.getText());
                 if (value < 0) {
                     errorMessage.append("Les montants ne peuvent pas être négatifs!\n");
                     break;
@@ -155,27 +166,25 @@ public class DialogController extends Dialog<Expense> {
         return true;
     }
 
-    public Expense createExpense() {
+    public Income createIncome() {
         if (!isInputValid()) {
             logger.warn("Tentative de création d'une dépense avec des données invalides");
             return null;
         }
 
         LocalDate date = periodeField.getValue();
-        float logement = parseFloatSafe(logementField.getText());
-        float nourriture = parseFloatSafe(nourritureField.getText());
-        float sortie = parseFloatSafe(sortieField.getText());
-        float transport = parseFloatSafe(transportField.getText());
-        float voyage = parseFloatSafe(voyageField.getText());
-        float impot = parseFloatSafe(impotField.getText());
-        float autres = parseFloatSafe(autresField.getText());
+        float salary = parseFloatSafe(salaryField.getText());
+        float helpers = parseFloatSafe(helpersField.getText());
+        float selfEnterprise = parseFloatSafe(selfEnterpriseField.getText());
+        float passiveIncome = parseFloatSafe(passiveIncomeField.getText());
+        float others = parseFloatSafe(othersField.getText());
 
-        float total = logement + nourriture + sortie + transport + voyage + impot + autres;
+        float total = salary + helpers + selfEnterprise + passiveIncome + others;
 
         logger.info("Nouvelle dépense créée pour la date: " + date + " avec un total de: " + total);
 
-        return new Expense(date, total, logement, nourriture, sortie,
-                transport, voyage, impot, autres);
+        return new Income(date, salary, helpers, selfEnterprise,
+                passiveIncome, others);
     }
 
     /**

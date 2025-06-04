@@ -2,7 +2,6 @@ package com.example.desktopproject;
 
 import com.example.desktopproject.db.Database;
 import com.example.desktopproject.utils.LogConfig;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -39,7 +38,7 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        getLogger().info("Démarrage de l'application Finance Tracker");
+        getLogger().info("Démarrage de l'application Finances Tracker");
 
         // Check if the database is OK
         getLogger().debug("Vérification de la connexion à la base de données");
@@ -56,12 +55,12 @@ public class HelloApplication extends Application {
         try {
             getLogger().debug("Chargement du fichier FXML: main-layout.fxml");
             FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("main-layout.fxml"));
-            Scene scene = new Scene(loader.load(), 1000, 600);
+            Scene scene = new Scene(loader.load(), 1200, 720);
 
             // Stocker une référence au contrôleur principal dans la scène
             scene.setUserData(loader.getController());
 
-            stage.setTitle("Finance Tracker");
+            stage.setTitle("Finances Tracker");
             stage.getIcons().add(new Image(HelloApplication.class.getResourceAsStream("/images/logoDesktop.png")));
             stage.setScene(scene);
             stage.show();

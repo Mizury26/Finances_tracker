@@ -1,6 +1,7 @@
 package com.example.desktopproject.charts;
 
 import com.example.desktopproject.model.Expense;
+import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -8,24 +9,22 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Tooltip;
 import org.apache.log4j.Logger;
 
-import java.time.Month;
 import java.time.YearMonth;
 import java.time.format.TextStyle;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class LineChart {
     private static final Logger logger = Logger.getLogger(LineChart.class);
 
-    private javafx.scene.chart.LineChart<String, Number> lineChart;
+    private final javafx.scene.chart.LineChart<String, Number> lineChart;
+    private final CategoryAxis xAxis;
+    private final NumberAxis yAxis;
     private List<Expense> expenses;
-    private CategoryAxis xAxis;
-    private NumberAxis yAxis;
     private YearMonth selectedMonth;
-
-    public void clear () {
-        this.lineChart.getData().clear();
-    }
 
     public LineChart(String title) {
         // Configuration des axes
@@ -39,6 +38,10 @@ public class LineChart {
         this.lineChart.setTitle(title);
         this.lineChart.setCreateSymbols(true);
         this.lineChart.setAnimated(true);
+    }
+
+    public void clear() {
+        this.lineChart.getData().clear();
     }
 
     public void createChart(Object data, YearMonth selectedYearMonth) {
@@ -93,13 +96,13 @@ public class LineChart {
                     .collect(Collectors.toList());
 
             // Calculer les totaux
-            float totalLogement = monthExpenses.stream().map(Expense::getHousing).reduce(0f, Float::sum);
-            float totalNourriture = monthExpenses.stream().map(Expense::getFood).reduce(0f, Float::sum);
-            float totalSortie = monthExpenses.stream().map(Expense::getGoingOut).reduce(0f, Float::sum);
-            float totalTransport = monthExpenses.stream().map(Expense::getTransportation).reduce(0f, Float::sum);
-            float totalVoyage = monthExpenses.stream().map(Expense::getTravel).reduce(0f, Float::sum);
-            float totalImpot = monthExpenses.stream().map(Expense::getTax).reduce(0f, Float::sum);
-            float totalAutres = monthExpenses.stream().map(Expense::getOthers).reduce(0f, Float::sum);
+            float totalLogement = monthExpenses.stream().map(Expense::getStrictHousing).reduce(0f, Float::sum);
+            float totalNourriture = monthExpenses.stream().map(Expense::getStrictFood).reduce(0f, Float::sum);
+            float totalSortie = monthExpenses.stream().map(Expense::getStrictGoingOut).reduce(0f, Float::sum);
+            float totalTransport = monthExpenses.stream().map(Expense::getStrictTransportation).reduce(0f, Float::sum);
+            float totalVoyage = monthExpenses.stream().map(Expense::getStrictTravel).reduce(0f, Float::sum);
+            float totalImpot = monthExpenses.stream().map(Expense::getStrictTax).reduce(0f, Float::sum);
+            float totalAutres = monthExpenses.stream().map(Expense::getStrictOthers).reduce(0f, Float::sum);
 
             // Ajouter les données aux séries
             logementSeries.getData().add(new XYChart.Data<>(monthLabel, totalLogement));
@@ -167,6 +170,12 @@ public class LineChart {
     }
 
     public void setTitle(String title) {
+        lineChart.setTitleSide(Side.TOP);
+
+        // Appliquer un style CSS personnalisé pour la couleur du titre
+        lineChart.lookupAll(".chart-title").forEach(node -> {
+            node.setStyle("-fx-text-fill: black; -fx-font-weight: 700; -fx-font-size: 12px; -fx-padding: 5 10 0 0; -fx-text-alignment: right; -fx-alignment: top-right");
+        });
         this.lineChart.setTitle(title);
     }
 }

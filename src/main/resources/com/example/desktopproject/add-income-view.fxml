@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<DialogPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          stylesheets="@../../../css/dialog-style.css"
+          prefWidth="400">
+
+    <headerText>Ajouter de nouveaux revenus </headerText>
+    
+    <content>
+        <GridPane hgap="10" vgap="10" styleClass="grid">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <!-- Période -->
+            <Label text="Période:" GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="label-field" />
+            <DatePicker fx:id="periodeField" GridPane.columnIndex="1" GridPane.rowIndex="0" styleClass="date-field" />
+
+            <!-- Salaire -->
+            <Label text="Salaire:" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="label-field" />
+            <TextField fx:id="salaryField" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="money-field" />
+
+            <!-- Aides -->
+            <Label text="Aides:" GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="label-field" />
+            <TextField fx:id="helpersField" GridPane.columnIndex="1" GridPane.rowIndex="2" styleClass="money-field" />
+
+            <!-- Auto-entreprise -->
+            <Label text="Auto-entreprise:" GridPane.columnIndex="0" GridPane.rowIndex="3" styleClass="label-field" />
+            <TextField fx:id="selfEnterpriseField" GridPane.columnIndex="1" GridPane.rowIndex="3" styleClass="money-field" />
+
+            <!-- Revenus passifs -->
+            <Label text="Revenus passifs:" GridPane.columnIndex="0" GridPane.rowIndex="4" styleClass="label-field" />
+            <TextField fx:id="passiveIncomeField" GridPane.columnIndex="1" GridPane.rowIndex="4" styleClass="money-field" />
+
+            <!-- Autres -->
+            <Label text="Autres:" GridPane.columnIndex="0" GridPane.rowIndex="7" styleClass="label-field" />
+            <TextField fx:id="othersField" GridPane.columnIndex="1" GridPane.rowIndex="7" styleClass="money-field" />
+
+            <!-- Total -->
+            <Label text="Total:" GridPane.columnIndex="0" GridPane.rowIndex="8" styleClass="total-label" />
+            <Label fx:id="totalLabel" text="0.00 €" GridPane.columnIndex="1" GridPane.rowIndex="8" styleClass="total-amount" />
+        </GridPane>
+    </content>
+
+    <buttonTypes>
+        <ButtonType buttonData="OK_DONE" text="Valider"/>
+        <ButtonType buttonData="CANCEL_CLOSE" text="Annuler"/>
+    </buttonTypes>
+</DialogPane>

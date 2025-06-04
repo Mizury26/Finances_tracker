@@ -42,7 +42,20 @@ dependencies {
     implementation("org.slf4j:slf4j-api:2.0.12")
     implementation("org.slf4j:slf4j-simple:2.0.12")
     implementation("log4j:log4j:1.2.17")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
 
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
+    testImplementation("org.mockito:mockito-core:5.8.0")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.8.0")
+}
+
+tasks.test {
+    useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
 }
 
 tasks.withType<Test> {
@@ -53,7 +66,7 @@ jlink {
     imageZip.set(layout.buildDirectory.file("/distributions/FinanceTracker-${javafx.platform.classifier}.zip"))
     options.set(listOf("--strip-debug", "--no-header-files", "--no-man-pages"))
     launcher {
-        name = "Finance Tracker"
+        name = "Finances Tracker"
     }
     jpackage {
         appVersion = version.toString()
@@ -75,11 +88,11 @@ jlink {
             imageOptions = listOf(
                 "--icon",
                 "src/main/resources/images/logoDesktop.icns",
-                "--mac-package-name", "finance-tracker",
+                "--mac-package-name", "finances-tracker",
             )
             installerOptions = listOf(
                 "--mac-package-name",
-                "finance-tracker",
+                "finances-tracker",
                 "--mac-package-identifier",
                 "com.example.desktopproject",
                 "--mac-package-signing-prefix",
@@ -93,8 +106,8 @@ jlink {
             )
             installerOptions = listOf(
                 "--linux-shortcut",
-                "--linux-menu-group", "Finance Tracker",
-                "--linux-package-name", "finance-tracker",
+                "--linux-menu-group", "Finances Tracker",
+                "--linux-package-name", "finances-tracker",
             )
         }
     }

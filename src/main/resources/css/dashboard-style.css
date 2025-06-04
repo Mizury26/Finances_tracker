@@ -1,0 +1,178 @@
+#welcomeMessage {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+#currentDate {
+    -fx-text-fill: #909193;
+}
+
+.subtitle {
+    -fx-text-fill: #909193;
+    -fx-font-weight: 600;
+    -fx-font-size: 18px;
+}
+
+.combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #26A69A;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 4 8 4 8;
+    -fx-font-size: 14px;
+    -fx-font-weight: normal;
+    -fx-text-fill: #333;
+}
+
+.combo-box .list-cell {
+    -fx-font-size: 14px;
+    -fx-padding: 2 4;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.combo-box .arrow {
+    -fx-background-color: #26A69A;
+    -fx-shape: "M 0 0 L 4 4 L 8 0 Z"; /* petite flèche vers le bas */
+    -fx-scale-shape: true;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: white;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.05), 6, 0, 0, 2);
+}
+
+.combo-box-popup .list-view .list-cell:selected {
+    -fx-background-color: #26A69A; /* Teal sélectionné */
+    -fx-text-fill: white; /* Texte blanc */
+}
+
+/* Couleur de fond et texte pour l'élément survolé */
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: #E0F2F1; /* Teal très pâle au hover */
+    -fx-text-fill: #000000; /* Texte noir */
+}
+
+.chart-pane {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 10, 0, 0, 4);
+}
+
+
+.chart {
+    -fx-padding: 10px;
+    -fx-background-color: transparent;
+}
+
+.chart-plot-background {
+    -fx-background-color: transparent;
+}
+
+.chart-legend {
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 4;
+    -fx-border-color: #ececec;
+    -fx-border-radius: 4;
+    -fx-padding: 5;
+}
+
+/* Styles spécifiques au PieChart */
+.chart-pie {
+    -fx-border-color: white;
+    -fx-border-width: 1px;
+}
+
+.chart-pie-label {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.data0.chart-pie {
+    -fx-pie-color: #2a9d90;
+}
+
+.data1.chart-pie {
+    -fx-pie-color: #09e1c5;
+}
+
+.data2.chart-pie {
+    -fx-pie-color: #c0c0c0;
+}
+
+.data3.chart-pie {
+    -fx-pie-color: #a2b6b6;
+}
+
+.data4.chart-pie {
+    -fx-pie-color: #2bccb5;
+}
+
+.data5.chart-pie {
+    -fx-pie-color: #53837c;
+}
+
+.data6.chart-pie {
+    -fx-pie-color: #097e70;
+}
+
+.chart-series-line.series0 {
+    -fx-stroke: #2a9d90;
+}
+
+.chart-series-line.series1 {
+    -fx-stroke: #09e1c5;
+}
+
+.chart-series-line.series2 {
+    -fx-stroke: #c0c0c0;
+}
+
+.chart-series-line.series3 {
+    -fx-stroke: #a2b6b6;
+}
+
+.chart-series-line.series4 {
+    -fx-stroke: #2bccb5;
+}
+
+.chart-series-line.series5 {
+    -fx-stroke: #53837c;
+}
+
+.chart-series-line.series6 {
+    -fx-stroke: #097e70;
+}
+
+/* Couleurs pour les symboles des points de données */
+.chart-line-symbol.series0 {
+    -fx-background-color: #2a9d90, white;
+}
+
+.chart-line-symbol.series1 {
+    -fx-background-color: #09e1c5, white;
+}
+
+.chart-line-symbol.series2 {
+    -fx-background-color: #c0c0c0, white;
+}
+
+.chart-line-symbol.series3 {
+    -fx-background-color: #a2b6b6, white;
+}
+
+.chart-line-symbol.series4 {
+    -fx-background-color: #2bccb5, white;
+}
+
+.chart-line-symbol.series5 {
+    -fx-background-color: #53837c, white;
+}
+
+.chart-line-symbol.series6 {
+    -fx-background-color: #097e70, white;
+}

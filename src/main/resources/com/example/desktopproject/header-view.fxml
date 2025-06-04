@@ -13,7 +13,7 @@
         <padding>
             <Insets top="20" bottom="30"/>
         </padding>
-        <Label text="Finance Tracker" styleClass="nav-title">
+        <Label text="Finances Tracker" styleClass="nav-title">
             <font>
                 <Font name="System Bold" size="18.0"/>
             </font>

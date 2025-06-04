@@ -39,7 +39,7 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        getLogger().info("Démarrage de l'application Finance Tracker");
+        getLogger().info("Démarrage de l'application Finances Tracker");
 
         // Check if the database is OK
         getLogger().debug("Vérification de la connexion à la base de données");
@@ -61,7 +61,7 @@ public class HelloApplication extends Application {
             // Stocker une référence au contrôleur principal dans la scène
             scene.setUserData(loader.getController());
 
-            stage.setTitle("Finance Tracker");
+            stage.setTitle("Finances Tracker");
             stage.getIcons().add(new Image(HelloApplication.class.getResourceAsStream("/images/logoDesktop.png")));
             stage.setScene(scene);
             stage.show();

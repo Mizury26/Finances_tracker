@@ -66,7 +66,7 @@ jlink {
     imageZip.set(layout.buildDirectory.file("/distributions/FinanceTracker-${javafx.platform.classifier}.zip"))
     options.set(listOf("--strip-debug", "--no-header-files", "--no-man-pages"))
     launcher {
-        name = "Finance Tracker"
+        name = "Finances Tracker"
     }
     jpackage {
         appVersion = version.toString()
@@ -88,11 +88,11 @@ jlink {
             imageOptions = listOf(
                 "--icon",
                 "src/main/resources/images/logoDesktop.icns",
-                "--mac-package-name", "finance-tracker",
+                "--mac-package-name", "finances-tracker",
             )
             installerOptions = listOf(
                 "--mac-package-name",
-                "finance-tracker",
+                "finances-tracker",
                 "--mac-package-identifier",
                 "com.example.desktopproject",
                 "--mac-package-signing-prefix",
@@ -106,8 +106,8 @@ jlink {
             )
             installerOptions = listOf(
                 "--linux-shortcut",
-                "--linux-menu-group", "Finance Tracker",
-                "--linux-package-name", "finance-tracker",
+                "--linux-menu-group", "Finances Tracker",
+                "--linux-package-name", "finances-tracker",
             )
         }
     }

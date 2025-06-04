@@ -9,17 +9,17 @@ public class DataBasePath {
     public static String getDatabasePath() {
         String os = System.getProperty("os.name").toLowerCase();
         String userHome = System.getProperty("user.home");
-        String appName = "FinanceTracker";
+        String appName = "FinancesTracker";
         String dbPath;
 
         if (os.contains("win")) {
-            // Windows : AppData/Local/FinanceTracker
+            // Windows : AppData/Local/FinancesTracker
             dbPath = userHome + "\\AppData\\Local\\" + appName + "\\database.db";
         } else if (os.contains("mac")) {
-            // macOS : ~/Library/Application Support/FinanceTracker
+            // macOS : ~/Library/Application Support/FinancesTracker
             dbPath = userHome + "/Library/Application Support/" + appName + "/database.db";
         } else {
-            // Linux : ~/.local/share/FinanceTracker
+            // Linux : ~/.local/share/FinancesTracker
             dbPath = userHome + "/.local/share/" + appName + "/database.db";
         }
 

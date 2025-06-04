@@ -45,7 +45,7 @@ public class LogConfig {
                     + logFile.getAbsolutePath());
         }
 
-        System.setProperty("finance.log.dir", logDir.getAbsolutePath());
+        System.setProperty("finances.log.dir", logDir.getAbsolutePath());
         System.out.println("Chemin de log configuré: " + logDir.getAbsolutePath());
     }
 
@@ -55,19 +55,19 @@ public class LogConfig {
     public static String getLogDirectoryPath() {
         String os = System.getProperty("os.name").toLowerCase();
         String userHome = System.getProperty("user.home");
-        String appName = "FinanceTracker";
+        String appName = "FinancesTracker";
         String logDir;
 
         if (os.contains("win")) {
-            // Windows : AppData/Local/FinanceTracker/logs
+            // Windows : AppData/Local/FinancesTracker/logs
             logDir = userHome + File.separator + "AppData" + File.separator + "Local"
                     + File.separator + appName + File.separator + "logs";
         } else if (os.contains("mac")) {
-            // macOS : ~/Library/Logs/FinanceTracker
+            // macOS : ~/Library/Logs/FinancesTracker
             logDir = userHome + File.separator + "Library" + File.separator + "Logs"
                     + File.separator + appName;
         } else {
-            // Linux : ~/.local/share/FinanceTracker/logs
+            // Linux : ~/.local/share/FinancesTracker/logs
             logDir = userHome + File.separator + ".local" + File.separator + "share"
                     + File.separator + appName + File.separator + "logs";
         }

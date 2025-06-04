@@ -1,6 +1,7 @@
 package com.example.desktopproject.charts;
 
 import com.example.desktopproject.model.Expense;
+import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -20,9 +21,9 @@ public class LineChart {
     private static final Logger logger = Logger.getLogger(LineChart.class);
 
     private final javafx.scene.chart.LineChart<String, Number> lineChart;
-    private List<Expense> expenses;
     private final CategoryAxis xAxis;
     private final NumberAxis yAxis;
+    private List<Expense> expenses;
     private YearMonth selectedMonth;
 
     public LineChart(String title) {
@@ -169,6 +170,12 @@ public class LineChart {
     }
 
     public void setTitle(String title) {
+        lineChart.setTitleSide(Side.TOP);
+
+        // Appliquer un style CSS personnalisé pour la couleur du titre
+        lineChart.lookupAll(".chart-title").forEach(node -> {
+            node.setStyle("-fx-text-fill: black; -fx-font-weight: 700; -fx-font-size: 12px; -fx-padding: 5 10 0 0; -fx-text-alignment: right; -fx-alignment: top-right");
+        });
         this.lineChart.setTitle(title);
     }
 }

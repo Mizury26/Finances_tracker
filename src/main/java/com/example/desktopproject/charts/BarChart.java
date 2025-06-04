@@ -2,14 +2,15 @@ package com.example.desktopproject.charts;
 
 import com.example.desktopproject.model.Expense;
 import com.example.desktopproject.model.Income;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Tooltip;
 import org.apache.log4j.Logger;
 
-import java.text.DecimalFormat;
 import java.time.Month;
 import java.time.format.TextStyle;
 import java.util.*;
@@ -21,7 +22,6 @@ public class BarChart {
     private final javafx.scene.chart.BarChart<String, Number> barChart;
     private final CategoryAxis xAxis;
     private final NumberAxis yAxis;
-    private final DecimalFormat formatter = new DecimalFormat("#,##0.00");
 
     public BarChart(String title) {
         // Configuration des axes
@@ -58,6 +58,12 @@ public class BarChart {
         // Obtenir les 12 mois précédents à partir du mois sélectionné
         List<Month> months = getLast12MonthsFrom(selectedMonth);
 
+        xAxis.setCategories(FXCollections.observableArrayList(
+                months.stream()
+                        .map(month -> month.getDisplayName(TextStyle.SHORT, Locale.FRANCE))
+                        .collect(Collectors.toList())
+        ));
+
         // Séries pour les dépenses et les revenus
         XYChart.Series<String, Number> expenseSeries = new XYChart.Series<>();
         expenseSeries.setName("Dépenses");
@@ -68,7 +74,7 @@ public class BarChart {
         // Ajouter les données aux séries
         Locale locale = Locale.FRANCE;
         for (Month month : months) {
-            String monthName = month.getDisplayName(TextStyle.FULL, locale);
+            String monthName = month.getDisplayName(TextStyle.SHORT, locale);
             float expenseTotal = expenseTotals.getOrDefault(month, 0f);
             float incomeTotal = incomeTotals.getOrDefault(month, 0f);
 
@@ -79,8 +85,21 @@ public class BarChart {
         // Ajouter les séries au graphique
         barChart.getData().addAll(expenseSeries, incomeSeries);
 
-        // Ajouter des tooltips
-        addTooltips(expenseSeries, incomeSeries);
+        if (!barChart.getData().isEmpty()) {
+            Platform.runLater(() -> {
+                for (Node n : barChart.lookupAll(".series0.chart-bar")) {
+                    n.setStyle("-fx-bar-fill: #e8e8e8;");
+
+                    n.setOnMouseEntered(event -> n.setStyle("-fx-bar-fill: #c0c0c0;")); // survol
+                    n.setOnMouseExited(event -> n.setStyle("-fx-bar-fill: #e8e8e8;")); // sortie
+                }
+                for (Node n : barChart.lookupAll(".series1.chart-bar")) {
+                    n.setStyle("-fx-bar-fill: #2a9d90;");
+                    n.setOnMouseEntered(event -> n.setStyle("-fx-bar-fill: #1f7d70;"));
+                    n.setOnMouseExited(event -> n.setStyle("-fx-bar-fill: #2a9d90;"));
+                }
+            });
+        }
 
         logger.debug("Graphique à barres créé avec succès pour les 12 mois précédant " +
                 selectedMonth.getDisplayName(TextStyle.FULL, locale));
@@ -138,29 +157,6 @@ public class BarChart {
         return new HashMap<>();
     }
 
-    private void addTooltips(XYChart.Series<String, Number> expenseSeries, XYChart.Series<String, Number> incomeSeries) {
-        for (XYChart.Data<String, Number> data : expenseSeries.getData()) {
-            String formattedValue = formatter.format(data.getYValue());
-            Tooltip tooltip = new Tooltip(data.getXValue() + "\nDépenses : " + formattedValue + " €");
-            tooltip.setStyle("-fx-font-size: 12px; -fx-font-weight: bold;");
-            Tooltip.install(data.getNode(), tooltip);
-
-            // Effet visuel au survol
-            data.getNode().setOnMouseEntered(event -> data.getNode().setStyle("-fx-opacity: 0.8;"));
-            data.getNode().setOnMouseExited(event -> data.getNode().setStyle("-fx-opacity: 1;"));
-        }
-
-        for (XYChart.Data<String, Number> data : incomeSeries.getData()) {
-            String formattedValue = formatter.format(data.getYValue());
-            Tooltip tooltip = new Tooltip(data.getXValue() + "\nRevenus : " + formattedValue + " €");
-            tooltip.setStyle("-fx-font-size: 12px; -fx-font-weight: bold;");
-            Tooltip.install(data.getNode(), tooltip);
-
-            // Effet visuel au survol
-            data.getNode().setOnMouseEntered(event -> data.getNode().setStyle("-fx-opacity: 0.8;"));
-            data.getNode().setOnMouseExited(event -> data.getNode().setStyle("-fx-opacity: 1;"));
-        }
-    }
 
     public void clear() {
         barChart.getData().clear();
@@ -172,6 +168,12 @@ public class BarChart {
     }
 
     public void setTitle(String title) {
+        barChart.setTitleSide(Side.TOP);
+
+        // Appliquer un style CSS personnalisé pour la couleur du titre
+        barChart.lookupAll(".chart-title").forEach(node -> {
+            node.setStyle("-fx-text-fill: black; -fx-font-weight: 700; -fx-font-size: 12px; -fx-padding: 5 10 0 0; -fx-text-alignment: right; -fx-alignment: top-right");
+        });
         barChart.setTitle(title);
     }
 }

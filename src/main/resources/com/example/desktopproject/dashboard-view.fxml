@@ -6,8 +6,7 @@
 <VBox xmlns:fx="http://javafx.com/fxml" stylesheets="@../../../css/dashboard-style.css"
       alignment="CENTER"
       spacing="10.0"
-      fx:controller="com.example.desktopproject.controller.DashboardController"
-      prefHeight="600.0" prefWidth="900.0">
+      fx:controller="com.example.desktopproject.controller.DashboardController">
 
     <HBox spacing="10.0" alignment="CENTER_LEFT"
           style="-fx-border-width: 0 0 1 0; -fx-border-color: rgba(144,145,147,0.25);"
@@ -18,7 +17,7 @@
         <Label fx:id="welcomeMessage">Bonjour utilisateur</Label>
         <Label fx:id="currentDate"/>
         <HBox HBox.hgrow="ALWAYS"/>
-        <ComboBox fx:id="monthSelector" prefWidth="150"/>
+        <ComboBox fx:id="monthSelector" prefWidth="150" styleClass="combo-box"/>
     </HBox>
 
     <!-- Utiliser un GridPane pour disposer les graphiques -->
